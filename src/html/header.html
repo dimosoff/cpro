@@ -1,0 +1,59 @@
+<header class="header">
+  <div class="header__container container">
+    <div class="header__body">
+      <div class="header__logo-wrapper">
+        <a class="header__logo" href="/">
+          <span class="sr-only">На главную</span>
+          @@include('../images/cpro-logo_.svg', {
+          "aria-label" : "cpro.by logo"
+          })
+        </a>
+      </div>
+      <nav class="header__menu menu">
+        <ul class="menu__contacts">
+          <li class="menu__contacts-wrapper">
+            <a class="menu__contacts-link-icon" href="https://telegram.org/">
+              @@include('../images/telegram-icon.svg', {})<span class="sr-only">Telegram</span>
+            </a>
+            <a class="menu__contacts-link-icon" href="https://www.viber.com/ru/">
+              @@include('../images/viber-icon.svg', {})<span class="sr-only">Viber</span>
+            </a>
+            <a class="menu__contacts-link-icon" href="https://www.whatsapp.com/">
+              @@include('../images/whatsapp-icon.svg', {})<span class="sr-only">Whatsapp</span>
+            </a>
+            <a class="menu__contacts-link phone" href="tel:+375447310101">
+              +375 44 <span class="menu__contacts-link--accent">731 01 01</span>
+            </a>
+          </li>
+          <li class="menu__contacts-link">
+            <a href="mailto:info@cpro.by" class="email">
+              @@include('../images/envelope-icon.svg', {})<span class="menu__contacts-label">info@cpro.by</span>
+            </a>
+          </li>
+          <li class="menu__contacts-link">
+            <span class="timetable">
+              @@include('../images/clock-icon.svg', {})<span class="menu__contacts-label">пн-пт с 10:00 до 17:00</span>
+            </span>
+          </li>
+          <li class="menu__contacts-link">
+            <span class="address">
+              @@include('../images/marker-icon.svg', {})<span class="menu__contacts-label">пер. С. Ковалевской, д.54/1,
+                каб. 303-60</span>
+            </span>
+          </li>
+        </ul>
+        <ul class="menu__list">
+          <li><a href="#why-we" class="menu__link">Почему мы?</a></li>
+          <li><a href="#prices" class="menu__link">Цены</a></li>
+          <li><a href="#top-up-stages" class="menu__link">Этапы пополнения</a></li>
+          <li><a href="#clients" class="menu__link">Клиенты</a></li>
+          <li><a href="#faq" class="menu__link">FAQ</a></li>
+          <li><a href="#contacts" class="menu__link">Контакты</a></li>
+        </ul>
+      </nav>
+      <button class="header__burger burger">
+        <span></span><span></span><span></span><span class="sr-only">Меню</span>
+      </button>
+    </div>
+  </div>
+</header>
