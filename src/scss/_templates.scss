@@ -1,3 +1,7 @@
+$button-background: $white;
+$button-background-hover: #9157ec;
+$button-color: #9258ed;
+
 ._bkgr-image {
   position: absolute;
   top: 50%;
@@ -8,6 +12,12 @@
   min-height: 100%;
   object-fit: cover;
   transform: translate(-50%, -50%) scale(1.001);
+
+  &--contain {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
 }
 ._image-wrapper {
   position: relative;
@@ -20,6 +30,12 @@ button,
 [role="button"] {
   transition: box-shadow $transition3;
   box-shadow: 0 0 0 1px transparent;
+}
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.01em;
 }
 @mixin focus-styles($width: 2px) {
   box-shadow: 0 0 0 $width $focus-color !important;
@@ -46,18 +62,19 @@ button,
   font-size: 14px;
   text-align: center;
   box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+  background: $button-background;
   line-height: 1;
   font-weight: 700;
   font-family: $Manrope;
   border-radius: 5px;
   text-decoration: none;
-  background: $button-background;
 
-  @media ($desktop-min) {
-    transition: background-position $transition3;
+  @media ($tablet-mad) {
+    transition: color $transition3, background-color $transition3;
 
     &:hover {
-      background-position: left center;
+      color: $white;
+      background-color: $button-background-hover;
     }
   }
   @media ($tablet-max) {

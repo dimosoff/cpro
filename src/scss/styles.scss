@@ -14,9 +14,7 @@ $f-item: #473e69;
 $f-label-placeholder-active: #807d8d;
 $required-and-error: #b02828;
 $header-background: $white;
-$header-hover: #a97cf0;
-$button-background: $white;
-$button-color: #9258ed;
+$accent-color: #a97cf0;
 
 $main-banner-gradient: linear-gradient(89.97deg, #9056ec 0.58%, #bb8fff 79.26%);
 
@@ -44,6 +42,10 @@ $header-height: 109px;
 @mixin margin-x($margin) {
   margin-left: $margin;
   margin-right: $margin;
+}
+@mixin padding-x($padding) {
+  padding-left: $padding;
+  padding-right: $padding;
 }
 @mixin column-size($size, $margin) {
   @include margin-x($margin);
@@ -137,7 +139,7 @@ body {
     & svg {
       width: 198px;
       height: auto;
-      transition: width $transition3;
+      // transition: width $transition3;
 
       // %header-scrolled & {
       //   width: 139px;
@@ -200,6 +202,7 @@ body {
 
   &__contacts-wrapper {
     display: flex;
+    align-items: center;
     margin-right: 28px;
   }
   &__contacts {
@@ -229,21 +232,21 @@ body {
       transition: color $transition3;
       @extend %link-indent;
 
-      @media ($desktop-min) {
-        &:hover {
-          color: $secondary-color;
+      @media ($tablet-mad) {
+        // &:hover {
+        //   color: $secondary-color;
 
-          %contact-link-icon {
-            fill: $secondary-color;
+        //   %contact-link-icon {
+        //     fill: $secondary-color;
 
-            // %header-scrolled & {
-            //   fill: $secondary-color;
-            // }
-          }
-          // %header-scrolled & {
-          //   color: $secondary-color;
-          // }
-        }
+        //     %header-scrolled & {
+        //       fill: $secondary-color;
+        //     }
+        //   }
+        //   %header-scrolled & {
+        //     color: $secondary-color;
+        //   }
+        // }
 
         // %header-scrolled & {
         //   color: $scrolled-color;
@@ -259,19 +262,22 @@ body {
         justify-content: center;
       }
 
+      &:not(a) {
+        cursor: default;
+      }
       &_active {
         color: $secondary-color;
       }
-      svg {
-        path {
-          transition: fill $transition3;
-          @extend %contact-link-icon;
+      // svg {
+      //   path {
+      //     transition: fill $transition3;
+      //     @extend %contact-link-icon;
 
-          @media ($tablet-max) {
-            fill: $scrolled-color;
-          }
-        }
-      }
+      //     @media ($tablet-max) {
+      //       fill: $scrolled-color;
+      //     }
+      //   }
+      // }
       & + & {
         @media ($desktop-min) {
           margin-left: 21px;
@@ -279,13 +285,6 @@ body {
         @media ($tablet-max) {
           margin-top: 25px;
         }
-      }
-
-      &--accent {
-        color: #aa7af8;
-        font-size: 17px;
-        font-weight: 700;
-        margin-left: 3px;
       }
     }
     &-link-icon {
@@ -303,6 +302,14 @@ body {
     }
     &-label {
       margin-left: 5px;
+    }
+  }
+  &__contacts-link-icon {
+    transform: scale(1) translateY(0);
+    transition: transform $transition3;
+
+    &:hover {
+      transform: translateY(-3px);
     }
   }
   &__list {
@@ -344,7 +351,7 @@ body {
 
     @media ($desktop-min) {
       &:hover {
-        color: $header-hover;
+        color: $accent-color;
 
         // %header-scrolled & {
         //   color: $secondary-color;
@@ -368,14 +375,45 @@ body {
   }
 }
 .phone {
+  position: relative;
   font-size: 16px;
+
+  &:hover {
+    color: $secondary-color;
+
+    &::before {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    width: calc(100% - 10px);
+    bottom: 5px;
+    opacity: 0;
+    transform: translateY(3px);
+    border-bottom: 1px solid $secondary-color;
+    transition: opacity $transition3, transform $transition3;
+  }
+  &--accent {
+    color: $secondary-color;
+    font-size: 17px;
+    font-weight: 700;
+    margin-left: 3px;
+  }
 }
 .email {
   color: #aa7af8;
-  font-weight: 500;
   font-size: 14px;
+  font-weight: 500;
   line-height: 1.357;
-  text-decoration-line: underline;
+  text-decoration: none;
+
+  &__label {
+    text-decoration-line: underline;
+  }
 }
 .timetable {
   font-weight: 300;
@@ -552,7 +590,7 @@ body {
   }
 }
 .why-we {
-  padding: 115px 0;
+  padding: 50px 0;
 
   @media ($tablet-max) and ($tablet-mad) {
     padding: 75px 0;
@@ -561,9 +599,6 @@ body {
     padding: 50px 0;
   }
   &__container {
-    @extend %row-wrapper;
-    padding: 0 15px;
-
     @media ($tablet-max) and ($tablet-mad) {
       padding: 0 10px;
     }
@@ -572,47 +607,102 @@ body {
     }
   }
   &__heading {
-    width: 100%;
+    @include padding-x(15px);
   }
   &__row {
     @extend %row-wrapper;
     @include margin-x(-15px);
-    width: 100%;
+  }
+  &__slides {
     margin-top: 30px;
   }
-  &__background {
-    position: absolute;
-    display: block;
+  &__slide {
+    @include column-size(20%, 15px);
+    width: 100%;
+  }
+}
+.ww-slide {
+  %ww-slide-gradien {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(233, 220, 255, 0.73) 0%,
+        #fff 66.6%
+      )
+      center/147px 113px no-repeat transparent;
+  }
+
+  &__wrapper {
     height: 100%;
-    width: calc(100% - 120px);
-    left: 60px;
-    border-radius: 10px;
-    background: $main-banner-gradient center/cover no-repeat transparent;
+    padding: 21px 11px 27px;
+    @extend %ww-slide-gradien;
+    overflow: hidden;
+    transform: translateY(0);
+    transition: transform $transition3;
+    box-shadow: 0px 5.5px 29.7px rgba(0, 0, 0, 0.03);
+    border-radius: 5px;
 
     &::before {
       content: "";
       position: absolute;
-      left: calc(50% + 98px);
-      width: 67px;
-      height: 89px;
-      bottom: 0;
-      background: url("../images/top-up-ad-accounts.png") center/contain
-        no-repeat transparent;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 9px;
+      transition: transform $transition3, opacity $transition3;
+      background-color: #e9dcff;
+    }
+
+    &:hover {
+      transform: translateY(-10px);
+
+      %ww-slide &::before {
+        opacity: 1 !important;
+        transform: translate(0, 0) scale(1) !important;
+      }
+    }
+
+    @extend %ww-slide-wrapper;
+  }
+
+  &:nth-child(1) %ww-slide-wrapper {
+    background-position: left bottom;
+    background-size: 147px 113px;
+
+    &::before {
+      opacity: 0;
+      transform: translate(-15%, 20%) scale(0);
     }
   }
-  &__slide {
-    @include column-size(20%, 15px);
-  }
-}
-.ww-slide {
-  display: block;
-  background: linear-gradient(116.49deg, #ffffff 33.37%, #ffffff 76.33%);
-  box-shadow: 0px 5.47201px 29.7052px rgba(0, 0, 0, 0.03);
-  border-radius: 5px;
+  &:nth-child(2) %ww-slide-wrapper {
+    background-position: 90% 10%;
+    background-size: 135px 76px;
 
-  &__wrapper {
-    padding: 21px 10px 27px;
+    &::before {
+      opacity: 0;
+      transform: translate(19%, -22%) scale(0);
+    }
   }
+  &:nth-child(3) %ww-slide-wrapper,
+  &:nth-child(5) %ww-slide-wrapper {
+    background-position: 55% 60%;
+    background-size: 140px 127px;
+
+    &::before {
+      opacity: 0;
+      transform: translate(2%, 10%) scale(0);
+    }
+  }
+  &:nth-child(4) %ww-slide-wrapper {
+    background-position: 95% 50%;
+    background-size: 150px 113px;
+
+    &::before {
+      opacity: 0;
+      transform: translate(14%, 4%) scale(0);
+    }
+  }
+
   &__image-wrapper {
     height: 70px;
     max-width: 85px;
@@ -622,36 +712,143 @@ body {
     //   height: 0;
     // }
   }
-  &__image {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
+  // &__image {
+  // }
   &__label {
+    cursor: default;
+    position: relative;
     font-size: 14px;
     margin-top: 10px;
     text-align: center;
     line-height: 1.357;
   }
+
+  @extend %ww-slide;
 }
 .free-audit {
+  color: $white;
+  margin-top: 30px;
+
   &__wrapper {
+    position: relative;
     @extend %row-wrapper;
+    align-items: center;
+    @include margin-x(15px);
+    padding: 23px 124px;
+    width: 100%;
+  }
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
     background: $main-banner-gradient center/cover no-repeat transparent;
 
     &::before {
       content: "";
       position: absolute;
-      left: calc(50% + 98px);
-      width: 498px;
-      height: 406px;
-      bottom: 0;
-      background: url("../images/top-up-ad-accounts.png") center/contain
-        no-repeat transparent;
+      top: 5px;
+      left: 37px;
+      width: 67px;
+      height: 89px;
+      background: url("../images/free-audit.png") center/contain no-repeat
+        transparent;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      right: -22px;
+      width: 193px;
+      bottom: -20px;
+      height: 88px;
+      background: url("../images/wow-background.svg") center/contain no-repeat
+        transparent;
     }
   }
+  &__column {
+    position: relative;
+
+    & + & {
+      margin-left: 66px;
+    }
+  }
+  &__heading {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.35;
+  }
+  &__content {
+    margin-top: 5px;
+    line-height: 1.375;
+  }
+  &__button {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 182px;
+  }
 }
+.prices {
+  padding: 50px 0;
+
+  &__row {
+    @extend %row-wrapper;
+    @include margin-x(-15px);
+  }
+  &__heading {
+    @include padding-x(15px);
+  }
+  &__slides {
+    margin-top: 30px;
+  }
+  &__slide {
+    @include column-size(25%, 15px);
+    width: 100%;
+  }
+}
+.prices-slide {
+  &__wrapper {
+    height: 100%;
+    cursor: default;
+    padding: 32px 22px;
+    box-shadow: 0px 5.47201px 29.7052px rgba(0, 0, 0, 0.03);
+    border-radius: 5px;
+    transform: translateY(0);
+    transition: transform $transition3, box-shadow $transition3;
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0px 5.47201px 29.7052px rgba(0, 0, 0, 0.08);
+    }
+  }
+  &__image-wrapper {
+    height: 50px;
+    max-width: 140px;
+    margin: 0 auto;
+  }
+  // &__image {
+  // }
+  &__heading {
+    color: $darkest;
+    font-size: 18px;
+    margin-top: 18px;
+    line-height: 1.388;
+  }
+  &__content {
+    font-size: 14px;
+    margin-top: 12px;
+    line-height: 1.357;
+  }
+  &__sale {
+    color: $accent-color;
+    font-size: 18px;
+    margin-top: 34px;
+    font-weight: 800;
+    line-height: 1.388;
+  }
+}
+
 .services {
   padding: 115px 0;
   background-color: $secondary-background;
