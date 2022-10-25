@@ -649,17 +649,22 @@ body {
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: 9px;
-      transition: transform $transition3, opacity $transition3;
+      opacity: 0;
+      transform: translate(0, 0) scale(1);
+      border-radius: 50%;
+      transition: opacity $transition3, border-radius $transition3,
+        transform $transition3;
+      transition-duration: 0.3s, 0.6s, 0.6s;
+      transition-delay: 0.1s, 0s, 0s;
       background-color: #e9dcff;
     }
 
     &:hover {
       transform: translateY(-10px);
 
-      %ww-slide &::before {
-        opacity: 1 !important;
-        transform: translate(0, 0) scale(1) !important;
+      &::before {
+        opacity: 1;
+        border-radius: 9px;
       }
     }
 
@@ -670,8 +675,7 @@ body {
     background-position: left bottom;
     background-size: 147px 113px;
 
-    &::before {
-      opacity: 0;
+    &:not(%ww-slide-wrapper:hover)::before {
       transform: translate(-15%, 20%) scale(0);
     }
   }
@@ -679,8 +683,7 @@ body {
     background-position: 90% 10%;
     background-size: 135px 76px;
 
-    &::before {
-      opacity: 0;
+    &:not(%ww-slide-wrapper:hover)::before {
       transform: translate(19%, -22%) scale(0);
     }
   }
@@ -689,8 +692,7 @@ body {
     background-position: 55% 60%;
     background-size: 140px 127px;
 
-    &::before {
-      opacity: 0;
+    &:not(%ww-slide-wrapper:hover)::before {
       transform: translate(2%, 10%) scale(0);
     }
   }
@@ -698,8 +700,7 @@ body {
     background-position: 95% 50%;
     background-size: 150px 113px;
 
-    &::before {
-      opacity: 0;
+    &:not(%ww-slide-wrapper:hover)::before {
       transform: translate(14%, 4%) scale(0);
     }
   }
@@ -724,7 +725,7 @@ body {
     line-height: 1.357;
   }
 
-  @extend %ww-slide;
+  // @extend %ww-slide;
 }
 .free-audit {
   color: $white;
