@@ -15,8 +15,9 @@ $f-label-placeholder-active: #807d8d;
 $required-and-error: #b02828;
 $header-background: $white;
 $accent-color: #a97cf0;
+$list-badge-color: #9056ec;
 
-$main-banner-gradient: linear-gradient(89.97deg, #9056ec 0.58%, #bb8fff 79.26%);
+$main-gradient: linear-gradient(89.97deg, #9056ec 0.58%, #bb8fff 79.26%);
 
 $desktop-min: "min-width: 992px";
 $tablet-max: "max-width: 991.98px";
@@ -510,7 +511,7 @@ body {
     width: calc(100% - 120px);
     left: 60px;
     border-radius: 10px;
-    background: $main-banner-gradient center/cover no-repeat transparent;
+    background: $main-gradient center/cover no-repeat transparent;
 
     &::before {
       content: "";
@@ -744,7 +745,7 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    background: $main-banner-gradient center/cover no-repeat transparent;
+    background: $main-gradient center/cover no-repeat transparent;
 
     &::before {
       content: "";
@@ -792,6 +793,8 @@ body {
 .prices {
   padding: 50px 0;
 
+  // &__container {
+  // }
   &__row {
     @extend %row-wrapper;
     @include margin-x(-15px);
@@ -848,6 +851,96 @@ body {
     line-height: 1.388;
   }
 }
+.steps {
+  padding: 50px 0;
+
+  // &__container {
+  // }
+  &__row {
+    @extend %row-wrapper;
+    @include margin-x(-15px);
+  }
+  &__column {
+    @include margin-x(15px);
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+  }
+  // &__heading {
+  // }
+  &__list {
+    font-size: 20px;
+    margin-top: 30px !important;
+    line-height: 1.35;
+    counter-reset: list;
+  }
+  &__item {
+    cursor: default;
+    display: flex;
+    position: relative;
+    min-height: 40px;
+    align-items: center;
+    padding-left: 65px;
+
+    & + & {
+      margin-top: 23px;
+    }
+    &::before {
+      counter-increment: list;
+      content: counter(list);
+      position: absolute;
+      top: 40%;
+      left: 0;
+      width: 40px;
+      color: $white;
+      height: 40px;
+      padding: 11px 2px 0 0;
+      overflow: hidden;
+      font-size: 32px;
+      text-align: right;
+      font-weight: 700;
+      line-height: 1;
+      transform: translateY(-40%);
+      border-radius: 50%;
+      background-color: $list-badge-color;
+    }
+  }
+  &__wrapper {
+    padding: 29px 60px 43px 48px;
+    box-shadow: 0px 7px 38px rgba(0, 0, 0, 0.03);
+    border-radius: 10px;
+    background-color: $white;
+  }
+}
+.steps-side-bar {
+  max-width: 270px;
+  flex-basis: 270px;
+
+  &__wrapper {
+    height: 100%;
+    padding: 33px 21px;
+    position: relative;
+    background-image: $main-gradient;
+  }
+  &__background {
+    left: 50%;
+    width: 221px;
+    bottom: 51px;
+    height: 125px;
+    position: absolute;
+    transform: translateX(-50%);
+    background: url("../images/steps-background.png") center/contain no-repeat
+      transparent;
+  }
+  &__content {
+    color: $white;
+    cursor: default;
+    font-weight: 700;
+    line-height: 1.375;
+    letter-spacing: -0.01em;
+  }
+}
+
 
 .services {
   padding: 115px 0;
