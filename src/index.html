@@ -1,143 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-@@include('html/head.html', {
+@@include('./src/html/head.html', {
 "title": "CPRO - Зачисления на рекламные кабинеты Google и Яндекс"
 })
 
 <body>
   <div class="wrapper">
-    @@include('html/header.html', {})
-    <main class="main-banner">
-      <div class="main-banner__background"></div>
-      <div class="main-banner__container container">
-        <div class="main-banner__content">
-          <h1 class="main-banner__heading heading">Зачисления на рекламные кабинеты Google и Яндекс</h1>
-          <p class="main-banner__subheading">ООО "КристаллПровайдер" осуществляет пополнение рекламных
-            аккаунтов со всеми закрывающими документами.</p>
-          <a href="#top-up-ad-accounts" class="main-banner__button _btn">Заказать пополнение аккаунтов</a>
-        </div>
-      </div>
-    </main>
-    <section class="why-we" id="why-we">
-      <div class="why-we__container container">
-        <div class="why-we__row">
-          <h2 class="why-we__heading heading">Почему мы?</h2>
-        </div>
-        <div class="why-we__row why-we__slides">
-          <div class="why-we__slide ww-slide">
-            <div class="ww-slide__wrapper">
-              <div class="ww-slide__image-wrapper _image-wrapper">
-                <img src="images/technical-support.png" alt="Техническая поддрежка по вопросам зачисления"
-                  class="ww-slide__image _bkgr-image _bkgr-image--contain">
-              </div>
-              <p class="ww-slide__label">Техническая поддрежка по вопросам зачисления</p>
-            </div>
-          </div>
-          <div class="why-we__slide ww-slide">
-            <div class="ww-slide__wrapper">
-              <div class="ww-slide__image-wrapper _image-wrapper">
-                <img src="images/billing.png" alt="Зачисления на аккаунт производим в день осуществления оплаты"
-                  class="ww-slide__image _bkgr-image _bkgr-image--contain">
-              </div>
-              <p class="ww-slide__label">Зачисления на аккаунт производим в день осуществления оплаты</p>
-            </div>
-          </div>
-          <div class="why-we__slide ww-slide">
-            <div class="ww-slide__wrapper">
-              <div class="ww-slide__image-wrapper _image-wrapper">
-                <img src="images/reporting.png" alt="Ежемесячная отчетность по выполненным работам"
-                  class="ww-slide__image _bkgr-image _bkgr-image--contain">
-              </div>
-              <p class="ww-slide__label">Ежемесячная отчетность по выполненным работам</p>
-            </div>
-          </div>
-          <div class="why-we__slide ww-slide">
-            <div class="ww-slide__wrapper">
-              <div class="ww-slide__image-wrapper _image-wrapper">
-                <img src="images/documents.png" alt="Закрывающие документы предоставляем каждый месяц"
-                  class="ww-slide__image _bkgr-image _bkgr-image--contain">
-              </div>
-              <p class="ww-slide__label">Закрывающие документы предоставляем каждый месяц</p>
-            </div>
-          </div>
-          <div class="why-we__slide ww-slide">
-            <div class="ww-slide__wrapper">
-              <div class="ww-slide__image-wrapper _image-wrapper">
-                <img src="images/commision.png" alt="При настройке контекстной рекламы нашей компанией, комиссия 0%"
-                  class="ww-slide__image _bkgr-image _bkgr-image--contain">
-              </div>
-              <p class="ww-slide__label">При настройке контекстной рекламы нашей компанией, комиссия 0%</p>
-            </div>
-          </div>
-        </div>
-        <div class="why-we__row free-audit">
-          <div class="free-audit__wrapper">
-            <div class="free-audit__background"></div>
-            <div class="free-audit__column">
-              <h2 class="free-audit__heading">Бесплатный аудит рекламных кабинетов для наших клиентов!</h2>
-              <p class="free-audit__content">Также занимаемся настройкой и ведением рекламы в сети Интернет!</p>
-            </div>
-            <div class="free-audit__column">
-              <button type="button" name="get-audit" class="free-audit__button _btn">Заказать аудит</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="prices" id="prices">
-      <div class="prices__container container">
-        <div class="prices__row">
-          <h2 class="prices__heading heading">Цены</h2>
-        </div>
-        <div class="prices__row prices__slides">
-          <div class="prices__slide prices-slide">
-            <div class="prices-slide__wrapper">
-              <div class="prices-slide__image-wrapper _image-wrapper">
-                <img src="images/google-logo.png" alt="Пополнение аккаунтов Google"
-                  class="prices-slide__image _bkgr-image _bkgr-image--contain">
-              </div>
-              <h3 class="prices-slide__heading">Пополнение аккаунтов Google</h3>
-              <p class="prices-slide__content">Гугол – это математический термин, обозначающий единицу со 100 нулями</p>
-              <p class="prices-slide__sale">Комиссия 50% от суммы зачислений</p>
-            </div>
-          </div>
-          <div class="prices__slide prices-slide">
-            <div class="prices-slide__wrapper">
-              <div class="prices-slide__image-wrapper _image-wrapper">
-                <img src="images/yandex-logo.png" alt="Пополнение аккаунтов Яндекс"
-                  class="prices-slide__image _bkgr-image _bkgr-image--contain">
-              </div>
-              <h3 class="prices-slide__heading">Пополнение аккаунтов Яндекс</h3>
-              <p class="prices-slide__content">Гугол – это математический термин, обозначающий единицу со 100 нулями</p>
-              <p class="prices-slide__sale">Комиссия 50% от суммы зачислений</p>
-            </div>
-          </div>
-          <div class="prices__slide prices-slide">
-            <div class="prices-slide__wrapper">
-              <div class="prices-slide__image-wrapper _image-wrapper">
-                <img src="images/facebook-logo.png" alt="Пополнение аккаунтов Facebook"
-                  class="prices-slide__image _bkgr-image _bkgr-image--contain">
-              </div>
-              <h3 class="prices-slide__heading">Пополнение аккаунтов Facebook</h3>
-              <p class="prices-slide__content">Гугол – это математический термин, обозначающий единицу со 100 нулями</p>
-              <p class="prices-slide__sale">Комиссия 50% от суммы зачислений</p>
-            </div>
-          </div>
-          <div class="prices__slide prices-slide">
-            <div class="prices-slide__wrapper">
-              <div class="prices-slide__image-wrapper _image-wrapper">
-                <img src="images/tiktok-logo.png" alt="Пополнение аккаунтов TikTok"
-                  class="prices-slide__image _bkgr-image _bkgr-image--contain">
-              </div>
-              <h3 class="prices-slide__heading">Пополнение аккаунтов TikTok</h3>
-              <p class="prices-slide__content">Гугол – это математический термин, обозначающий единицу со 100 нулями</p>
-              <p class="prices-slide__sale">Комиссия 50% от суммы зачислений</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    @@include('./src/html/header.html')
+    @@include('./src/html/main-banner.html')
+    @@include('./src/html/why-we.html')
+    @@include('./src/html/prices.html')
+    
     <section class="steps" id="steps">
       <div class="steps__container container">
         <div class="steps__row">
@@ -165,18 +39,18 @@
     <section class="clients">
       <div class="clients__container container">
         <div class="clients__row">
-          <h2 class="clients__heading">Клиенты</h2>
+          <h2 class="clients__heading heading">Клиенты</h2>
         </div>
         <div class="clients__row">
           <div class="clients__item">
             <div class="clients__image-wrapper _image-wrapper">
-              <img src="" alt="" class="clients__image _img_bckg">
+              <img src="images/cpro-logo.svg" alt="cpro.by logo" class="clients__image _bkgr-image _bkgr-image--contain">
             </div>
           </div>
         </div>
       </div>
     </section>
-    @@include('html/footer.html', {})
+    @@include('./src/html/footer.html', {})
   </div>
   <div class="popup-overlay"></div>
   <div class="thank-you-popup">
