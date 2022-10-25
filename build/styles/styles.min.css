@@ -158,7 +158,7 @@ button,
 }
 
 ._btn {
-  color: #fff;
+  color: #9258ed;
   border: none;
   padding: 18px 30px;
   position: relative;
@@ -166,11 +166,11 @@ button,
   text-align: center;
   box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
   line-height: 1;
-  font-weight: 400;
+  font-weight: 700;
   font-family: "Manrope", sans-serif;
   border-radius: 5px;
   text-decoration: none;
-  background: #9258ed;
+  background: #fff;
 }
 @media (min-width: 992px) {
   ._btn {
