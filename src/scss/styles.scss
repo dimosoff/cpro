@@ -18,6 +18,7 @@ $f-label-placeholder-active: #807d8d;
 $badge-color: #9056ec;
 $border-grey: #e1e1e1;
 $faq-text-color: #6f6f6f;
+$faq-side-bar-text: #f1f3f9;
 
 $main-gradient: linear-gradient(89.97deg, #9056ec 0.58%, #bb8fff 79.26%);
 $faq-gradient: linear-gradient(89.97deg, #fdd65b 0.58%, #f28a0c 99.97%);
@@ -980,7 +981,7 @@ body {
     @extend %clients-image-wrapper;
   }
   &__image {
-    padding: 22px;
+    padding: 20px;
 
     @media ($tablet-mad) {
       transition: transform $transition3;
@@ -1035,6 +1036,7 @@ body {
     max-width: 100%;
   }
   &__wrapper {
+    height: 100%;
     padding: 29px 40px 43px 48px;
     box-shadow: 0px 7px 38px rgba(0, 0, 0, 0.03);
     border-radius: 10px;
@@ -1071,6 +1073,12 @@ body {
     padding-bottom: 10px;
     justify-content: space-between;
     background-color: transparent;
+
+    @media ($tablet-mad) {
+      &:hover {
+        @extend %faq-item-button-hover;
+      }
+    }
   }
   &__heading {
     color: $dark;
@@ -1078,6 +1086,15 @@ body {
     font-weight: 600;
     line-height: 1.388;
     letter-spacing: normal;
+
+    @media ($tablet-mad) {
+      transform: translateX(0);
+      transition: transform $transition3;
+
+      %faq-item-button-hover & {
+        transform: translateX(2px);
+      }
+    }
   }
   &__button-icon {
     width: 30px;
@@ -1089,15 +1106,39 @@ body {
     line-height: 26.5px;
     border-radius: 50%;
     background-color: $badge-color;
-    transition: opacity $transition3;
+    transition: opacity $transition3, transform $transition3;
 
-    %faq-item-not-active & {
-      opacity: 0.3;
+    @media ($tablet-mad) {
+      transform: scale(1);
+
+      %faq-item-button-hover & {
+        transform: scale(1.2);
+      }
     }
 
     & svg {
       width: 10px;
       height: 10px;
+      transform: rotate(0);
+      transition: transform $transition3;
+
+      & #hide-to-minus {
+        opacity: 1;
+        transition: opacity $transition3;
+      }
+    }
+
+    %faq-item-not-active & {
+      opacity: 0.3;
+    }
+    %faq-item-active & {
+      & svg {
+        transform: rotate(90deg);
+
+        & #hide-to-minus {
+          opacity: 0;
+        }
+      }
     }
   }
   &__answer-wrapper {
@@ -1114,7 +1155,7 @@ body {
     %faq-item-active & {
       opacity: 1;
       visibility: visible;
-      transition-delay: 0.1s, 0.1s, 0s;
+      transition-delay: 0.2s, 0.2s, 0.1s;
     }
   }
   &__answer {
@@ -1126,28 +1167,46 @@ body {
 .faq-side-bar {
   max-width: 270px;
   flex-basis: 270px;
+  text-align: center;
 
   &__wrapper {
     height: 100%;
-    padding: 33px 21px 210px;
+    display: flex;
+    padding: 20px 20px 43px;
     position: relative;
+    flex-direction: column;
     background-image: $faq-gradient;
   }
   &__background {
+    top: 187px;
     left: 50%;
-    width: 221px;
-    bottom: 51px;
-    height: 125px;
+    width: 288px;
+    height: 288px;
     position: absolute;
     transform: translateX(-50%);
     background: url("../images/your-answer.png") center/contain no-repeat
       transparent;
   }
   &__heading {
+    color: $faq-side-bar-text;
+    margin: 0 -20px;
+    font-size: 79px;
+    font-weight: 800;
+    line-height: 1.367;
   }
   &__content {
+    color: $white;
+    flex-grow: 1;
+    font-size: 20px;
+    margin-top: 24px;
+    font-weight: 800;
+    line-height: 1.35;
   }
   &__button {
+    width: 100%;
+    margin-top: 247px;
+    padding-top: 16px;
+    padding-bottom: 15px;
   }
 }
 
