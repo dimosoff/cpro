@@ -31,6 +31,57 @@ document.addEventListener("DOMContentLoaded", function () {
     wrongEmail: "Неверный email",
   };
 
+  //faq list collapse
+  const allFaqItems = document.querySelectorAll(".faq-item");
+  allFaqItems.forEach((item) => {
+    const answerButton = item.querySelector(".faq-item__button");
+    const answerWrapper = item.querySelector(".faq-item__answer-wrapper");
+
+    answerButton.addEventListener("click", () => {
+      faqClearStyles(answerButton, answerWrapper);
+    });
+  });
+
+  function faqClearStyles(currentAnswerButton, currentAnswerWrapper) {
+    if (currentAnswerButton.length && currentAnswerWrapper.length) return;
+    let isAnyShowed;
+    const currentAnswerItem = currentAnswerButton.parentElement;
+
+    allFaqItems.forEach((e) => {
+      isAnyShowed = false;
+      const thisAnswerButtonClasses =
+        e.querySelector(".faq-item__button").classList;
+      if (
+        !thisAnswerButtonClasses.contains("_active") &&
+        !thisAnswerButtonClasses.contains("_not-active")
+      )
+        return;
+
+      isAnyShowed = true;
+    });
+
+    console.log(isAnyShowed);
+    if (isAnyShowed) return;
+
+    allFaqItems.forEach((e) => {
+      e.classList.add("_not-active");
+      e.classList.remove("_active");
+      e.querySelector(".faq-item__answer-wrapper").removeAttribute("style");
+    });
+
+    console.log(currentAnswerItem);
+    if (!currentAnswerItem.classList.contains("_active")) {
+      currentAnswerItem.classList.add("_active");
+      currentAnswerItem.classList.remove("_not-active");
+      currentAnswerWrapper.style.height = `${currentAnswerWrapper.firstElementChild.offsetHeight}px`;
+    } else {
+      console.log("currentAnswerWrapper");
+      currentAnswerItem.classList.remove("_active");
+      currentAnswerWrapper.removeAttribute("style");
+      allFaqItems.forEach((e) => e.classList.remove("_not-active"));
+    }
+  }
+
   popupCloseButton.addEventListener("click", () => {
     myPopupOverlay.hide();
     thankYouPopopup.classList.remove(thankYouPopopupClassActive);
