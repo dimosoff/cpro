@@ -49,7 +49,6 @@ $header-height: 109px;
   padding-right: $padding;
 }
 @mixin column-size($size, $margin) {
-  @include margin-x($margin);
   flex: 0 1 calc($size - $margin * 2);
   max-width: calc($size - $margin * 2);
 }
@@ -78,6 +77,15 @@ body {
   margin: 0 auto;
   padding: 0 30px;
   max-width: 100%;
+}
+.row {
+  @extend %row-wrapper;
+  @include margin-x(-15px);
+
+  & > * {
+    width: 100%;
+    @include margin-x(15px);
+  }
 }
 .heading {
   color: $darkest;
@@ -593,33 +601,29 @@ body {
 .why-we {
   padding: 50px 0;
 
-  @media ($tablet-max) and ($tablet-mad) {
-    padding: 75px 0;
-  }
-  @media ($tablet-mid) {
-    padding: 50px 0;
-  }
-  &__container {
-    @media ($tablet-max) and ($tablet-mad) {
-      padding: 0 10px;
-    }
-    @media ($tablet-mid) {
-      flex-direction: column;
-    }
-  }
-  &__heading {
-    @include padding-x(15px);
-  }
-  &__row {
-    @extend %row-wrapper;
-    @include margin-x(-15px);
-  }
+  // @media ($tablet-max) and ($tablet-mad) {
+  //   padding: 75px 0;
+  // }
+  // @media ($tablet-mid) {
+  //   padding: 50px 0;
+  // }
+  // &__container {
+  //   @media ($tablet-max) and ($tablet-mad) {
+  //     padding: 0 10px;
+  //   }
+  //   @media ($tablet-mid) {
+  //     flex-direction: column;
+  //   }
+  // }
+  // &__heading {
+  // }
+  // &__row {
+  // }
   &__slides {
     margin-top: 30px;
   }
   &__slide {
     @include column-size(20%, 15px);
-    width: 100%;
   }
 }
 .ww-slide {
@@ -735,7 +739,6 @@ body {
     position: relative;
     @extend %row-wrapper;
     align-items: center;
-    @include margin-x(15px);
     padding: 23px 124px;
     width: 100%;
   }
@@ -796,19 +799,15 @@ body {
 
   // &__container {
   // }
-  &__row {
-    @extend %row-wrapper;
-    @include margin-x(-15px);
-  }
-  &__heading {
-    @include padding-x(15px);
-  }
+  // &__row {
+  // }
+  // &__heading {
+  // }
   &__slides {
     margin-top: 30px;
   }
   &__slide {
     @include column-size(25%, 15px);
-    width: 100%;
   }
 }
 .prices-slide {
@@ -857,12 +856,9 @@ body {
 
   // &__container {
   // }
-  &__row {
-    @extend %row-wrapper;
-    @include margin-x(-15px);
-  }
+  // &__row {
+  // }
   &__column {
-    @include margin-x(15px);
     flex-basis: 0;
     flex-grow: 1;
     max-width: 100%;
@@ -942,23 +938,20 @@ body {
   }
 }
 .clients {
-  padding: 50px 0;
+  padding: 50px 0 20px;
 
   // &__container {
   // }
   &__row {
-    @extend %row-wrapper;
-    @include margin-x(-15px);
-
     & + & {
       margin-top: 30px;
     }
   }
-  &__heading {
-    @include padding-x(15px);
-  }
+  // &__heading {
+  // }
   &__item {
     @include column-size(16.666%, 15px);
+    margin-bottom: 30px;
   }
   &__image-wrapper {
     width: 100%;
@@ -969,6 +962,34 @@ body {
   }
   &__image {
     padding: 22px;
+  }
+}
+.experts {
+  padding: 50px 0;
+
+  // &__container {
+  // }
+  &__row {
+    & + & {
+      margin-top: 30px;
+    }
+  }
+  // &__heading {
+  // }
+  &__content {
+    font-size: 18px;
+    max-width: 830px;
+    margin-top: 30px;
+    font-weight: 400;
+    line-height: 30px;
+  }
+  &__slide {
+    @include column-size(16.6666%, 15px)
+  }
+  &__image-wrapper {
+    height: 254px;
+  }
+  &__image {
   }
 }
 
