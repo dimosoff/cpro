@@ -50,6 +50,30 @@
       });
     });
   }
+  function scrollToTop() {
+    let $scrollTopElement = document.querySelector(".scroll-top");
+    window.addEventListener("scroll", function() {
+      let hasClass = $scrollTopElement.classList.contains("_active"), isScrolled = scrollY > 35;
+      if (isScrolled && !hasClass) {
+        $scrollTopElement.classList.add("_active");
+      } else if (!isScrolled && hasClass) {
+        $scrollTopElement.classList.remove("_active");
+      }
+    });
+    $scrollTopElement.addEventListener("click", () => {
+      let currentScrollTop = window.scrollY;
+      animate({
+        duration: 600,
+        timing: easeOut,
+        draw: function(progress) {
+          window.scrollTo(0, currentScrollTop - currentScrollTop * progress);
+        }
+      });
+    });
+    if (scrollY > 35 && !$scrollTopElement.classList.contains("_active")) {
+      $scrollTopElement.classList.add("_active");
+    }
+  }
   function animate({ timing, draw, duration }) {
     let start = performance.now();
     requestAnimationFrame(function animate2(time) {
@@ -66,7 +90,7 @@
     });
   }
   function easeOut(timeFraction) {
-    return Math.sqrt(timeFraction);
+    return Math.pow(timeFraction, 1 / 5);
   }
   function myLazyLoad() {
     const lazyObjects = document.querySelectorAll("[data-lazyload]");
@@ -143,13 +167,19 @@
     const name = "popup-overlay";
     this.element = document.querySelector(`.${name}`);
     const elementClassActive = `${name}_active`;
+    const bodyElement = document.body, headerElement = document.querySelector("header");
     this.show = () => {
+      let scrollWidth = window.innerWidth - document.body.clientWidth;
       this.element.classList.add(elementClassActive);
-      document.body.style = `overflow: hidden; margin-right: ${window.innerWidth - document.body.clientWidth}px`;
+      bodyElement.style = `overflow: hidden; margin-right: ${scrollWidth}px`;
+      headerElement.style = `padding-right: ${scrollWidth}px`;
     };
     this.hide = () => {
       this.element.classList.remove(elementClassActive);
-      document.body.style = "";
+      setTimeout(() => {
+        bodyElement.style = "";
+        headerElement.style = "";
+      }, 300);
     };
   }
 
@@ -158,6 +188,7 @@
     addClassOnScroll(".header", 35, "_scrolled");
     addClassOnClick(".burger", ".header", "_menu-opened");
     myLazyLoad();
+    scrollToTop();
     myGallery;
     mySetAnchorsEvents;
     const myPopupOverlay2 = myPopupOverlay;
@@ -165,19 +196,20 @@
     const popupCloseButton = document.querySelector(
       "button[name='thank-you-close']"
     );
-    const form = document.querySelector("form[name='evaluation']");
-    const formElements = document.querySelectorAll(".f-item__input");
+    const form = document.querySelector("form[name='conatcts-form']");
+    const formElements = document.querySelectorAll(".form__input");
     const formRequiredElements = document.querySelectorAll("[data-required]");
     const thankYouPopopupClassActive = `${thankYouPopopup.className}_active`;
-    const inputMessageClass = "f-item__error-message";
+    const inputMessageClass = "form__error-message";
     const inputMessageClassActive = `${inputMessageClass}_active`;
-    const inputClass = "f-item__input";
+    const inputClass = "form__input";
     const inputClassError = `${inputClass}_error`;
     const inputClassValid = `${inputClass}_valid`;
     const errorMessages = {
       emptyName: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0438\u043C\u044F",
+      emptyPhone: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0442\u0435\u043B\u0435\u0444\u043E\u043D",
       emptyEmail: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 email",
-      emptyDescription: "\u041E\u043F\u0438\u0448\u0438\u0442\u0435 \u0437\u0430\u0434\u0430\u0447\u0438/\u0437\u0430\u0434\u0430\u0447\u0443",
+      wrongPhone: "\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0439 \u0442\u0435\u043B\u0435\u0444\u043E\u043D",
       wrongEmail: "\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0439 email"
     };
     const allFaqItems = document.querySelectorAll(".faq-item");
@@ -234,7 +266,7 @@
       if (!elemValue && event == "init" || !!elemValue && event == "focusout") {
         return;
       }
-      const placeholderClassActive = "f-item__placeholder_active";
+      const placeholderClassActive = "form__label_placeholder_active";
       switch (event) {
         case "init":
         case "focusin":
@@ -286,7 +318,7 @@
           }
         });
         const elemsWithErrors = document.querySelectorAll(
-          "[data-required].f-item__input_error"
+          "[data-required].form__input_error"
         ).length;
         if (elemsWithErrors)
           return;

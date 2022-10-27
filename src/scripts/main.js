@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   myFunctions.addClassOnScroll(".header", 35, "_scrolled");
   myFunctions.addClassOnClick(".burger", ".header", "_menu-opened");
   myFunctions.myLazyLoad();
+  myFunctions.scrollToTop();
   myFunctions.myGallery;
   myFunctions.mySetAnchorsEvents;
   const myPopupOverlay = myFunctions.myPopupOverlay;
@@ -11,23 +12,24 @@ document.addEventListener("DOMContentLoaded", function () {
     "button[name='thank-you-close']"
   );
 
-  const form = document.querySelector("form[name='evaluation']");
-  const formElements = document.querySelectorAll(".f-item__input");
+  const form = document.querySelector("form[name='conatcts-form']");
+  const formElements = document.querySelectorAll(".form__input");
   const formRequiredElements = document.querySelectorAll("[data-required]");
 
   const thankYouPopopupClassActive = `${thankYouPopopup.className}_active`;
 
-  const inputMessageClass = "f-item__error-message";
+  const inputMessageClass = "form__error-message";
   const inputMessageClassActive = `${inputMessageClass}_active`;
 
-  const inputClass = "f-item__input";
+  const inputClass = "form__input";
   const inputClassError = `${inputClass}_error`;
   const inputClassValid = `${inputClass}_valid`;
 
   const errorMessages = {
     emptyName: "Введите имя",
+    emptyPhone: "Введите телефон",
     emptyEmail: "Введите email",
-    emptyDescription: "Опишите задачи/задачу",
+    wrongPhone: "Неверный телефон",
     wrongEmail: "Неверный email",
   };
 
@@ -64,6 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  //popup click events
+
   popupCloseButton.addEventListener("click", () => {
     myPopupOverlay.hide();
     thankYouPopopup.classList.remove(thankYouPopopupClassActive);
@@ -98,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const placeholderClassActive = "f-item__placeholder_active";
+    const placeholderClassActive = "form__label_placeholder_active";
 
     switch (event) {
       case "init":
@@ -200,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       const elemsWithErrors = document.querySelectorAll(
-        "[data-required].f-item__input_error"
+        "[data-required].form__input_error"
       ).length;
 
       if (elemsWithErrors) return;

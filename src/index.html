@@ -15,17 +15,12 @@
     @@include('./src/html/clients.html')
     @@include('./src/html/experts.html')
     @@include('./src/html/faq.html')
-    
+    @@include('./src/html/contacts.html')
     @@include('./src/html/footer.html', {})
   </div>
   <div class="popup-overlay"></div>
-  <div class="thank-you-popup">
-    <button class="thank-you-popup__close-button" type="button" name="thank-you-close">
-      <span class="sr-only">Закрыть</span>
-    </button>
-    <span>Спасибо, ваша заявка принята</span>
-    <hr>
-  </div>
+  @@include("./src/html/thank-you-popup.html")
+  @@include("./src/html/scroll-top.html")
   <script src="scripts/main.js"></script>
 </body>
 

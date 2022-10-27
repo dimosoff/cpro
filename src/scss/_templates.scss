@@ -37,8 +37,8 @@ h3,
 h4 {
   letter-spacing: -0.01em;
 }
-@mixin focus-styles($width: 2px) {
-  box-shadow: 0 0 0 $width $focus-color !important;
+@mixin focus-styles($width: 2px, $color: $focus-color) {
+  box-shadow: 0 0 0 $width $color !important;
 }
 %focus-styles-disable {
   box-shadow: 0 0 0 1px transparent !important;
@@ -52,6 +52,7 @@ h4 {
   @extend %focus-styles-disable;
 }
 *:focus-visible {
+  outline: none;
   @include focus-styles;
 }
 ._btn {
@@ -92,6 +93,30 @@ h4 {
   }
   &:focus:not(:focus-visible) {
     @extend %focus-styles-disable;
+  }
+}
+.scroll-top {
+  position: fixed;
+  border: 0;
+  right: 80px;
+  bottom: 80px;
+  width: 55px;
+  height: 55px;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 0 20px rgba(131, 69, 228, 0.28);
+  border-radius: 50%;
+  background-color: $white;
+  transition: opacity $transition3, visibility $transition3;
+
+  &._active {
+    opacity: 0.7;
+    visibility: visible;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 .sr-only {

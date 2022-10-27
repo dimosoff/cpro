@@ -1,0 +1,44 @@
+<form class="form" name="conatcts-form" novalidate>
+  <div class="form__row row">
+    <div class="form__item form__item_half">
+      @@if (false) {
+      <label for="name" class="form__label">Имя<span class="required-star">*</span></label>
+      }
+      <input class="form__input" type="text" name="f-name" id="name" value="" data-required="" placeholder="Имя*">
+      <p class="form__error-message"></p>
+    </div>
+    <div class="form__item form__item_half">
+      @@if (false) {
+      <label for="phone" class="form__label form__label_placeholder">Телефон<span class="required-star">*</span></label>
+      }
+      <input class="form__input" type="tel" name="f-phone" id="phone" value="" data-required="" placeholder="Телефон*">
+    </div>
+    <div class="form__item">
+      @@if (false) {
+      <label for="email" class="form__label form__label_placeholder">E-mail<span class="required-star">*</span></label>
+      }
+      <input class="form__input" type="text" name="f-email" id="email" value="" data-required="" placeholder="E-mail*">
+      <p class="form__error-message"></p>
+    </div>
+    <div class="form__item form__item_more-gap">
+      @@if (false) {
+      <label for="description" class="form__label form__label_placeholder">Комментарий</label>
+      }
+      <textarea class="form__input" name="f-description" id="description" placeholder="Комментарий"></textarea>
+    </div>
+    @@if (false) {
+    <div class="form__item">
+      <input class="form__checkbox sr-only" type="checkbox" name="f-access" id="access">
+      <label for="access" class="form__label">Готовы предоставить доступ для более детальной
+        оценки</label>
+    </div>
+    }
+    <div class="form__item">
+      <div class="form__button-wrapper">
+        <button class="form__button _btn" type="submit" name="f-submit" id="f-submit">Отправить</button>
+        <span class="form__personal-data">Нажимая на кнопку, вы соглашаетесь на обработку <a href="#">персональных
+            данных</a></span>
+      </div>
+    </div>
+  </div>
+</form>
