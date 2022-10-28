@@ -70,7 +70,7 @@ h4 {
   border-radius: 5px;
   text-decoration: none;
 
-  @media ($tablet-mad) {
+  @media ($desktop-min) {
     transition: color $transition3, background-color $transition3;
 
     &:hover {
@@ -98,8 +98,6 @@ h4 {
 .scroll-top {
   position: fixed;
   border: 0;
-  right: 80px;
-  bottom: 80px;
   width: 55px;
   height: 55px;
   padding: 0;
@@ -109,6 +107,15 @@ h4 {
   border-radius: 50%;
   background-color: $white;
   transition: opacity $transition3, visibility $transition3;
+
+  @media ($desktop-min) {
+    right: 80px;
+    bottom: 80px;
+  }
+  @media ($tablet-max) and ($tablet-mad) {
+    right: 60px;
+    bottom: 60px;
+  }
 
   &._active {
     opacity: 0.7;

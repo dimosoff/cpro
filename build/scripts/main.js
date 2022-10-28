@@ -307,7 +307,7 @@
             return;
           }
           switch (currentElement.id) {
-            case "email":
+            case "f-email":
               if (!validateEmail(currentElement.value)) {
                 setValidationClasses(emptyParams, "wrong");
                 break;
@@ -335,8 +335,31 @@
           );
         }
         console.info("\u041C\u0430\u0441\u0441\u0438\u0432: ", dataArray);
+        formRequiredElements.forEach((e2) => {
+          e2.classList.remove(inputClassValid);
+        });
+        form.reset();
       });
     }
+    form.querySelector("#f-phone").addEventListener("input", (e) => {
+      let y = e.target.value.replace(/((?!\+)\D+)+/g, "");
+      let x1 = y.match(/^(\+7{0,2})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+      let phoneArray = "", mre = 1;
+      if (x1 === null || !x1[mre]) {
+        phoneArray = "";
+      } else if (x1[mre] && !x1[mre + 1]) {
+        phoneArray = `${x1[mre]}`;
+      } else if (x1[mre] && x1[mre + 1] && !x1[mre + 2]) {
+        phoneArray = `${x1[mre]} (${x1[mre + 1]}`;
+      } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && !x1[mre + 3]) {
+        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}`;
+      } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && x1[mre + 3] && !x1[mre + 4]) {
+        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${x1[mre + 3]}`;
+      } else {
+        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${x1[mre + 3]}-${x1[mre + 4]}`;
+      }
+      e.target.value = phoneArray;
+    });
     function setValidationClasses(elemParams, errorType = "") {
       const curEl = elemParams[0];
       const curElSibl = elemParams[1];
@@ -360,14 +383,14 @@
       if (isElemHasClass && errorType == "empty") {
         curElLabel.classList.add(inputMessageClassActive);
         switch (curEl.id) {
-          case "name":
+          case "f-name":
             curElLabel.textContent = errorMessages.emptyName;
             break;
-          case "email":
+          case "f-email":
             curElLabel.textContent = errorMessages.emptyEmail;
             break;
-          case "description":
-            curElLabel.textContent = errorMessages.emptyDescription;
+          case "f-phone":
+            curElLabel.textContent = errorMessages.emptyPhone;
             break;
         }
         return;
@@ -375,8 +398,11 @@
       if (isElemHasClass && errorType == "wrong") {
         curElLabel.classList.add(inputMessageClassActive);
         switch (curEl.id) {
-          case "email":
+          case "f-email":
             curElLabel.textContent = errorMessages.wrongEmail;
+            break;
+          case "f-phone":
+            curElLabel.textContent = errorMessages.wrongPhone;
             break;
         }
         return;
