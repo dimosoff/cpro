@@ -78,11 +78,12 @@ h4 {
       background-color: $button-background-hover;
     }
   }
-  @media ($tablet-max) {
+  @media ($tablet-max) and ($tablet-min) {
     padding: 15px 30px;
     font-size: 15px;
   }
   @media ($mobile-max) {
+    padding: 13px 27px;
     font-size: 14px;
     line-height: 1.3;
   }

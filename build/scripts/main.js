@@ -343,7 +343,7 @@
     }
     form.querySelector("#f-phone").addEventListener("input", (e) => {
       let y = e.target.value.replace(/((?!\+)\D+)+/g, "");
-      let x1 = y.match(/^(\+7{0,2})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+      let x1 = y.match(/^(\+\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
       let phoneArray = "", mre = 1;
       if (x1 === null || !x1[mre]) {
         phoneArray = "";
