@@ -5,7 +5,7 @@ import imagemin, { mozjpeg, svgo } from "gulp-imagemin";
 export const imagesWebp = () => {
   return app.gulp
     .src(app.path.src.imagesWebp)
-    .pipe(app.plugins.newer(app.path.build.images))
+    // .pipe(app.plugins.newer(app.path.build.images))
     .pipe(
       webp({
         quality: 85,
@@ -100,6 +100,6 @@ export const images = () => {
         )
       )
       .pipe(app.gulp.dest(app.path.build.images))
-      .pipe(app.plugins.browsersync.stream())
+      .pipe(app.plugins.if(app.isDev, app.plugins.browsersync.stream()))
   );
 };

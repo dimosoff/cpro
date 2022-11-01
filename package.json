@@ -1,12 +1,12 @@
 {
   "name": "cpro.by",
-  "version": "0.0.1",
+  "version": "0.9.5",
   "description": "",
   "main": "gulpfile.js",
   "type": "module",
   "scripts": {
     "dev": "gulp dev",
-    "build": "gulp build",
+    "build": "gulp build --build",
     "fontsGenerator": "gulp fontsGenerator"
   },
   "author": "dimosoff",

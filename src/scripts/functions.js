@@ -60,28 +60,28 @@ function setAnchorsEvents() {
 }
 
 export function scrollToTop() {
-  let $scrollTopElement = document.querySelector('.scroll-top');
-  window.addEventListener('scroll', function () {
-    let hasClass = $scrollTopElement.classList.contains('_active'),
+  let $scrollTopElement = document.querySelector(".scroll-top");
+  window.addEventListener("scroll", function () {
+    let hasClass = $scrollTopElement.classList.contains("_active"),
       isScrolled = scrollY > 35;
     if (isScrolled && !hasClass) {
-      $scrollTopElement.classList.add('_active');
+      $scrollTopElement.classList.add("_active");
     } else if (!isScrolled && hasClass) {
-      $scrollTopElement.classList.remove('_active');
+      $scrollTopElement.classList.remove("_active");
     }
   });
-  $scrollTopElement.addEventListener('click', () => {
+  $scrollTopElement.addEventListener("click", () => {
     let currentScrollTop = window.scrollY;
     animate({
       duration: 600,
       timing: easeOut,
       draw: function (progress) {
         window.scrollTo(0, currentScrollTop - currentScrollTop * progress);
-      }
+      },
     });
   });
-  if (scrollY > 35 && !$scrollTopElement.classList.contains('_active')) {
-    $scrollTopElement.classList.add('_active');
+  if (scrollY > 35 && !$scrollTopElement.classList.contains("_active")) {
+    $scrollTopElement.classList.add("_active");
   }
 }
 
@@ -107,7 +107,7 @@ function linear(timeFraction) {
 }
 // eslint-disable-next-line no-unused-vars
 function easeOut(timeFraction) {
-  return Math.pow(timeFraction, 1/5);
+  return Math.pow(timeFraction, 1 / 5);
 }
 
 export function myLazyLoad() {
@@ -183,9 +183,12 @@ function gallery() {
   });
 
   galleryObjects.forEach((elem) => {
+    const imageElement = elem.querySelector("img");
+    if (!imageElement) return;
+
     const imageLink =
-      elem.firstElementChild.getAttribute("data-src") ||
-      elem.firstElementChild.getAttribute("src") ||
+      imageElement.getAttribute("data-src") ||
+      imageElement.getAttribute("src") ||
       "images/placeholder.svg";
     const imageSource = imageLink.replace("/thumbnails", "");
 

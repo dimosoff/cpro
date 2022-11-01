@@ -32,5 +32,5 @@ export const scss = () => {
       })
     )
     .pipe(app.gulp.dest(app.path.build.styles))
-    .pipe(app.plugins.browsersync.stream());
+    .pipe(app.plugins.if(app.isDev, app.plugins.browsersync.stream()));
 };

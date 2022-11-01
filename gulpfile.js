@@ -33,6 +33,9 @@ const mainTasks = gulp.parallel(copy, html, scss, scripts, images);
 const dev = gulp.series(reset, mainTasks, gulp.parallel(watcher, server));
 const build = gulp.series(reset, mainTasks, imagesWebp, killTask);
 
+export { dev };
+export { build };
+
 gulp.task("dev", dev);
 gulp.task("build", build);
 gulp.task("fontsGenerator", fonts);
