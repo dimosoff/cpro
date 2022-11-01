@@ -559,9 +559,10 @@ body {
     right: 0;
     width: 390px;
     bottom: 0;
-    padding: 116px 35px 70px 55px;
+    padding: 116px 35px 55px 55px;
     overflow: auto;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     flex-direction: column-reverse;
     background-color: #f6f4f9;
     transform-origin: right center;
