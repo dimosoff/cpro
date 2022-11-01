@@ -220,8 +220,9 @@ body {
       right: 0;
       width: 390px;
       bottom: 0;
-      padding: 116px 55px 70px;
+      padding: 116px 35px 70px 55px;
       overflow: auto;
+      overflow: hidden;
       flex-direction: column-reverse;
       background-color: $secondary-background;
       transform-origin: right center;
@@ -349,7 +350,16 @@ body {
 
   &__wrapper {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+
+    @media (max-width: 379.98px) {
+      & .phone {
+        flex-basis: 100%;
+        margin-top: 15px;
+        margin-left: 0 !important;
+      }
+    }
   }
   &__link {
     position: relative;
@@ -359,7 +369,6 @@ body {
     font-size: 14px;
     line-height: 1.357;
     font-weight: 300;
-    white-space: nowrap;
     // letter-spacing: 0.088em;
     text-decoration: none;
     transition: color $transition3;
@@ -395,6 +404,19 @@ body {
     //   justify-content: center;
     // }
 
+    & > .email,
+    & > .timetable,
+    & > .address {
+      display: block;
+      position: relative;
+      padding-left: 25px;
+
+      svg {
+        top: 2px;
+        left: 0;
+        position: absolute;
+      }
+    }
     &:not(a) {
       cursor: default;
     }
@@ -416,20 +438,20 @@ body {
     text-decoration: none;
 
     & + & {
-      margin-left: 10px;
-      // @media ($desktop-min) {
-      // }
-      // @media ($tablet-max) {
-      //   margin-top: 25px;
-      // }
+      @media (min-width: 380px) {
+        margin-left: 10px;
+      }
+      @media (max-width: 379.98px) {
+        margin-left: 15px;
+      }
     }
     & + %link-indent {
       margin-left: 10px;
     }
   }
-  &__label {
-    margin-left: 5px;
-  }
+  // &__label {
+  //   margin-left: 5px;
+  // }
   &__link-icon {
     @media ($desktop-min) {
       transform: scale(1) translateY(0);
@@ -774,7 +796,7 @@ body {
     @media ($tablet-mid) {
       margin-bottom: 15px;
     }
-    @media ($tablet-mid) and ($tablet-mad) {
+    @media ($tablet-mid) and ($tablet-min) {
       @include column-size(33.33333%, 7.5px);
     }
     @media ($mobile-max) {
@@ -1390,14 +1412,18 @@ body {
     @extend %clients-image-wrapper;
   }
   &__image {
-    padding: 20px;
-
     @media ($tablet-mad) {
       transition: transform $transition3;
 
       %clients-image-wrapper & {
         transform: translate(-50%, -50%) scale(0.95);
       }
+    }
+    @media ($tablet-min) {
+      padding: 10px 20px;
+    }
+    @media ($mobile-max) {
+      padding: 5px 10px;
     }
   }
 }
@@ -1904,7 +1930,7 @@ body {
       }
       @media ($mobile-max) {
         top: 20px;
-        right: -10px;
+        right: -15px;
         width: 140px;
         height: 184px;
       }
@@ -1943,7 +1969,7 @@ body {
     color: inherit;
   }
   &__column {
-    @media ($desktop-min) {
+    @media ($desktop-min-xl) {
       &:nth-child(1) {
         @include column-size(42%, 15px);
       }
@@ -1951,12 +1977,20 @@ body {
         @include column-size(58%, 15px);
       }
     }
-    @media ($tablet-max) and ($tablet-mad) {
+    @media ($desktop-max) and ($desktop-min) {
       &:nth-child(1) {
-        @include column-size(42%, 7.5px);
+        @include column-size(50%, 15px);
       }
       &:nth-child(2) {
-        @include column-size(58%, 7.5px);
+        @include column-size(50%, 15px);
+      }
+    }
+    @media ($tablet-max) and ($tablet-mad) {
+      &:nth-child(1) {
+        @include column-size(50%, 7.5px);
+      }
+      &:nth-child(2) {
+        @include column-size(50%, 7.5px);
       }
     }
   }
@@ -1966,6 +2000,10 @@ body {
     overflow: hidden;
     position: relative;
     border-radius: 5px;
+
+    @media ($tablet-mid) {
+      display: none;
+    }
   }
 }
 .map {
@@ -1974,10 +2012,6 @@ body {
   height: 100%;
   max-width: 100%;
   max-height: 100%;
-
-  @media ($tablet-mid) {
-    display: none;
-  }
 }
 .form {
   color: $white;
@@ -2016,7 +2050,7 @@ body {
       margin-bottom: 0;
     }
     &_half {
-      @media ($tablet-min) {
+      @media ($desktop-min), ($tablet-mid) and ($tablet-min) {
         @include column-size(50%, 7.5px);
       }
     }
@@ -2054,8 +2088,11 @@ body {
     @extend %f-item-element;
     @extend %f-item-input;
 
+    @media ($tablet-max) {
+      font-size: 15px;
+    }
     @media ($tablet-min) {
-      padding: 15px 40px 15px 25px;
+      padding: 15px 15px 15px 25px;
     }
     @media ($mobile-max) {
       padding: 13px 29px;
@@ -2080,6 +2117,7 @@ body {
   }
   & textarea%f-item-input {
     margin: 0;
+    resize: none;
 
     @media ($tablet-min) {
       min-height: 113px;
@@ -2220,6 +2258,8 @@ body {
     box-shadow: 0 7px 38px rgba(0, 0, 0, 0.03);
     background-color: $white;
 
+    @extend %footer-main;
+
     @media ($desktop-min), ($tablet-mid) and ($tablet-min) {
       padding-top: 31px;
       padding-bottom: 31px;
@@ -2235,8 +2275,10 @@ body {
   }
   &__container {
     @media ($mobile-max) {
-      padding-left: 45px;
-      padding-right: 45px;
+      %footer-main & {
+        padding-left: 45px;
+        padding-right: 45px;
+      }
     }
   }
   // &__row {
@@ -2343,9 +2385,15 @@ body {
   }
   &__basement {
     color: $white;
-    padding: 12px 0;
     background-color: $badge-color;
 
+    @media ($tablet-min) {
+      padding: 12px 0;
+    }
+    @media ($mobile-max) {
+      padding: 14px 0;
+      text-align: center;
+    }
     &-content {
       font-size: 14px;
       font-weight: 600;
