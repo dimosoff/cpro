@@ -157,14 +157,22 @@
       const imageLink = imageElement.getAttribute("data-src") || imageElement.getAttribute("src") || "images/placeholder.svg";
       const imageSource = imageLink.replace("/thumbnails", "");
       elem.addEventListener("click", (event) => {
-        event.preventDefault();
-        myPopupOverlay.show();
-        galleryImage.onload = () => galleryWrapper.appendChild(galleryImage);
-        galleryImage.src = imageSource;
-        galleryImage.alt = event.target.alt;
-        this.show();
+        this.showGalleryElement(event, imageSource);
+      });
+      elem.addEventListener("keydown", (e) => {
+        if (e.key === " " || e.key === "Enter" || e.key === "Spacebar") {
+          this.showGalleryElement(e, imageSource);
+        }
       });
     });
+    this.showGalleryElement = (event, imageSource) => {
+      event.preventDefault();
+      myPopupOverlay.show();
+      galleryImage.onload = () => galleryWrapper.appendChild(galleryImage);
+      galleryImage.src = imageSource;
+      galleryImage.alt = event.target.alt;
+      this.show();
+    };
   }
   function popupOverlay() {
     const name = "popup-overlay";
@@ -221,6 +229,12 @@
       const answerWrapper = item.querySelector(".faq-item__answer-wrapper");
       answerButton.addEventListener("click", () => {
         faqCollapseAnimation(answerButton, answerWrapper);
+      });
+      answerButton.addEventListener("keydown", (e) => {
+        if (e.key === " " || e.key === "Enter" || e.key === "Spacebar") {
+          e.preventDefault();
+          faqCollapseAnimation(answerButton, answerWrapper);
+        }
       });
     });
     function faqCollapseAnimation(currentAnswerButton, currentAnswerWrapper) {

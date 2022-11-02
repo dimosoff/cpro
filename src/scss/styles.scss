@@ -248,6 +248,7 @@ body {
     }
     @media ($mobile-max) {
       width: 100%;
+      padding-top: 111px;
     }
   }
   &__contacts {
@@ -257,8 +258,13 @@ body {
     @media ($tablet-max) {
       width: 100%;
       flex-grow: 1;
-      margin-top: 35px !important;
       flex-direction: column;
+    }
+    @media ($tablet-max) and ($tablet-min) {
+      margin-top: 35px !important;
+    }
+    @media ($mobile-max) {
+      margin-top: 30px !important;
     }
 
     // .menu-contacts__wrapper {
@@ -266,13 +272,13 @@ body {
 
     li + li {
       @media ($desktop-min) {
-        margin-left: 21px;
+        margin-left: 25px;
       }
       @media ($desktop-max) and ($desktop-min) {
         display: none;
       }
       @media ($tablet-max) {
-        margin-top: 20px;
+        margin-top: 25px;
       }
     }
   }
@@ -288,9 +294,15 @@ body {
       width: 100%;
       margin-top: auto !important;
       flex-direction: column;
-
+    }
+    @media ($tablet-max) and ($tablet-min) {
       li + li {
         margin-top: 24px;
+      }
+    }
+    @media ($mobile-max) {
+      li + li {
+        margin-top: 14px;
       }
     }
   }
@@ -346,6 +358,10 @@ body {
       //   color: $scrolled-color;
       // }
     }
+    @media ($mobile-max) {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
 
     // @media ($tablet-max) {
     //   font-size: 20px;
@@ -385,7 +401,7 @@ body {
     // letter-spacing: 0.088em;
     text-decoration: none;
     transition: color $transition3;
-    @extend %link-indent;
+    // @extend %link-indent;
 
     // @media ($tablet-mad) {
     //   &:hover {
@@ -422,14 +438,15 @@ body {
     & > .address {
       display: block;
       position: relative;
-      padding-left: 25px;
+      padding-left: 30px;
 
       svg {
-        top: 2px;
-        left: 0;
-        position: absolute;
+        top: 50%;
+        left: 5px;
         width: 16px;
         height: 16px;
+        position: absolute;
+        transform: translateY(-50%);
       }
     }
     &:not(a) {
@@ -450,9 +467,10 @@ body {
     // }
   }
   &__link-icon {
-    width: 31px;
-    height: 31px;
+    width: 41px;
+    height: 41px;
     text-decoration: none;
+    @extend %link-indent;
 
     & + & {
       @media (min-width: 380px) {
@@ -483,6 +501,7 @@ body {
 .phone {
   position: relative;
   font-size: 16px;
+  @extend %link-indent;
 
   &:hover {
     color: $secondary-color;
@@ -516,6 +535,7 @@ body {
   font-weight: 500;
   line-height: 1.357;
   text-decoration: none;
+  @extend %link-indent;
 
   @media ($desktop-min) {
     &:hover {
@@ -529,9 +549,11 @@ body {
 }
 .timetable {
   font-weight: 300;
+  @extend %link-indent;
 }
 .address {
   color: $darker;
+  @extend %link-indent;
 }
 .burger {
   display: none;
@@ -1809,19 +1831,19 @@ body {
       transparent;
 
     @media ($tablet-mad) {
-      top: 187px;
-      width: 288px;
-      height: 288px;
+      top: 237px;
+      width: 155px;
+      height: 192px;
     }
-    @media ($tablet-mid) {
-      top: 177px;
-      width: 238px;
-      height: 238px;
+    @media ($tablet-mid) and ($tablet-min) {
+      top: 210px;
+      width: 138px;
+      height: 172px;
     }
     @media ($mobile-max) {
-      top: 123px;
-      width: 145px;
-      height: 145px;
+      top: 149px;
+      width: 78px;
+      height: 96px;
     }
   }
   &__heading {
@@ -2390,8 +2412,14 @@ body {
     flex-direction: column;
 
     li {
-      margin-top: 7px;
-      margin-bottom: 7px;
+      @media ($tablet-min) {
+        margin-top: 7px;
+        margin-bottom: 7px;
+      }
+      @media ($mobile-max) {
+        margin-top: 2px;
+        margin-bottom: 2px;
+      }
     }
     @media ($mobile-max) {
       & .menu__link {
@@ -2403,12 +2431,16 @@ body {
   &__contacts {
     flex-direction: column;
 
+    @media ($tablet-min) {
+      white-space: nowrap;
+    }
+
     li + li {
       @media ($tablet-min) {
-        margin-top: 10px;
+        margin-top: 15px;
       }
       @media ($mobile-max) {
-        margin-top: 6px;
+        margin-top: 11px;
       }
     }
   }

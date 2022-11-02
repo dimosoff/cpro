@@ -42,6 +42,12 @@ document.addEventListener("DOMContentLoaded", function () {
     answerButton.addEventListener("click", () => {
       faqCollapseAnimation(answerButton, answerWrapper);
     });
+    answerButton.addEventListener("keydown", (e) => {
+      if (e.key === " " || e.key === "Enter" || e.key === "Spacebar") {
+        e.preventDefault();
+        faqCollapseAnimation(answerButton, answerWrapper);
+      }
+    });
   });
 
   function faqCollapseAnimation(currentAnswerButton, currentAnswerWrapper) {
@@ -226,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       formRequiredElements.forEach((e) => {
         e.classList.remove(inputClassValid);
-      })
+      });
       form.reset();
     });
   }

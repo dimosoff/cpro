@@ -3,17 +3,19 @@ import pngquant from "imagemin-pngquant";
 import imagemin, { mozjpeg, svgo } from "gulp-imagemin";
 
 export const imagesWebp = () => {
-  return app.gulp
-    .src(app.path.src.imagesWebp)
-    // .pipe(app.plugins.newer(app.path.build.images))
-    .pipe(
-      webp({
-        quality: 85,
-        alphaQuality: 80,
-        sharpness: 0,
-      })
-    )
-    .pipe(app.gulp.dest(app.path.build.images));
+  return (
+    app.gulp
+      .src(app.path.src.imagesWebp)
+      // .pipe(app.plugins.newer(app.path.build.images))
+      .pipe(
+        webp({
+          quality: 85,
+          alphaQuality: 80,
+          sharpness: 0,
+        })
+      )
+      .pipe(app.gulp.dest(app.path.build.images))
+  );
 };
 
 export const images = () => {
@@ -84,17 +86,15 @@ export const images = () => {
               multipass: false,
               floatPrecision: 3,
             }),
+            pngquant({
+              speed: 4,
+              strip: true,
+              quality: [0.3, 0.5],
+              dithering: 1,
+              verbose: true,
+            }),
           ],
           {
-            plugins: [
-              pngquant({
-                speed: 4,
-                strip: true,
-                quality: [0.3, 0.5],
-                dithering: true,
-                verbose: true,
-              }),
-            ],
             verbose: false, // extra details
           }
         )

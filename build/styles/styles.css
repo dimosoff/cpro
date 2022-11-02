@@ -396,7 +396,7 @@ b:not(._fw600) {
   flex-wrap: wrap;
 }
 
-.menu-contacts__link, .menu__link {
+.address, .timetable, .email, .phone, .menu-contacts__link-icon, .menu__link {
   margin: -5px;
   padding: 5px;
 }
@@ -588,6 +588,7 @@ body {
 @media (max-width: 575.98px) {
   .header__nav {
     width: 100%;
+    padding-top: 111px;
   }
 }
 @media (min-width: 992px) {
@@ -599,13 +600,22 @@ body {
   .header__contacts {
     width: 100%;
     flex-grow: 1;
-    margin-top: 35px !important;
     flex-direction: column;
+  }
+}
+@media (max-width: 991.98px) and (min-width: 576px) {
+  .header__contacts {
+    margin-top: 35px !important;
+  }
+}
+@media (max-width: 575.98px) {
+  .header__contacts {
+    margin-top: 30px !important;
   }
 }
 @media (min-width: 992px) {
   .header__contacts li + li {
-    margin-left: 21px;
+    margin-left: 25px;
   }
 }
 @media (max-width: 1199.98px) and (min-width: 992px) {
@@ -615,7 +625,7 @@ body {
 }
 @media (max-width: 991.98px) {
   .header__contacts li + li {
-    margin-top: 20px;
+    margin-top: 25px;
   }
 }
 @media (min-width: 992px) {
@@ -632,8 +642,15 @@ body {
     margin-top: auto !important;
     flex-direction: column;
   }
+}
+@media (max-width: 991.98px) and (min-width: 576px) {
   .header__list li + li {
     margin-top: 24px;
+  }
+}
+@media (max-width: 575.98px) {
+  .header__list li + li {
+    margin-top: 14px;
   }
 }
 .header__background {
@@ -665,6 +682,12 @@ body {
 @media (min-width: 992px) {
   .menu__link:hover {
     color: #a97cf0;
+  }
+}
+@media (max-width: 575.98px) {
+  .menu__link {
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }
 .menu__link_active {
@@ -699,14 +722,15 @@ body {
 .menu-contacts__link > .email, .menu-contacts__link > .timetable, .menu-contacts__link > .address {
   display: block;
   position: relative;
-  padding-left: 25px;
+  padding-left: 30px;
 }
 .menu-contacts__link > .email svg, .menu-contacts__link > .timetable svg, .menu-contacts__link > .address svg {
-  top: 2px;
-  left: 0;
-  position: absolute;
+  top: 50%;
+  left: 5px;
   width: 16px;
   height: 16px;
+  position: absolute;
+  transform: translateY(-50%);
 }
 .menu-contacts__link:not(a) {
   cursor: default;
@@ -715,8 +739,8 @@ body {
   color: #aa7af8;
 }
 .menu-contacts__link-icon {
-  width: 31px;
-  height: 31px;
+  width: 41px;
+  height: 41px;
   text-decoration: none;
 }
 @media (min-width: 380px) {
@@ -729,7 +753,7 @@ body {
     margin-left: 15px;
   }
 }
-.menu-contacts__link-icon + .menu__link, .menu-contacts__link-icon + .menu-contacts__link {
+.menu-contacts__link-icon + .address, .menu-contacts__link-icon + .timetable, .menu-contacts__link-icon + .email, .menu-contacts__link-icon + .phone, .menu-contacts__link-icon + .menu__link, .menu-contacts__link-icon + .menu-contacts__link-icon {
   margin-left: 10px;
 }
 @media (min-width: 992px) {
@@ -2229,23 +2253,23 @@ body {
 }
 @media (min-width: 768px) {
   .faq-side-bar__background {
-    top: 187px;
-    width: 288px;
-    height: 288px;
+    top: 237px;
+    width: 155px;
+    height: 192px;
   }
 }
-@media (max-width: 767.98px) {
+@media (max-width: 767.98px) and (min-width: 576px) {
   .faq-side-bar__background {
-    top: 177px;
-    width: 238px;
-    height: 238px;
+    top: 210px;
+    width: 138px;
+    height: 172px;
   }
 }
 @media (max-width: 575.98px) {
   .faq-side-bar__background {
-    top: 123px;
-    width: 145px;
-    height: 145px;
+    top: 149px;
+    width: 78px;
+    height: 96px;
   }
 }
 .faq-side-bar__heading {
@@ -2815,9 +2839,17 @@ body {
   align-items: flex-start;
   flex-direction: column;
 }
-.footer__menu li {
-  margin-top: 7px;
-  margin-bottom: 7px;
+@media (min-width: 576px) {
+  .footer__menu li {
+    margin-top: 7px;
+    margin-bottom: 7px;
+  }
+}
+@media (max-width: 575.98px) {
+  .footer__menu li {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
 }
 @media (max-width: 575.98px) {
   .footer__menu .menu__link {
@@ -2829,13 +2861,18 @@ body {
   flex-direction: column;
 }
 @media (min-width: 576px) {
+  .footer__contacts {
+    white-space: nowrap;
+  }
+}
+@media (min-width: 576px) {
   .footer__contacts li + li {
-    margin-top: 10px;
+    margin-top: 15px;
   }
 }
 @media (max-width: 575.98px) {
   .footer__contacts li + li {
-    margin-top: 6px;
+    margin-top: 11px;
   }
 }
 .footer__basement {
