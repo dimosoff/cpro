@@ -8,15 +8,21 @@ document.addEventListener("DOMContentLoaded", function () {
   const myPopupOverlay = myFunctions.myPopupOverlay;
 
   const thankYouPopopup = document.querySelector(".thank-you-popup");
-  const popupCloseButton = document.querySelector(
-    "button[name='thank-you-close']"
+  const topUpPopopup = document.querySelector(".top-up-popup");
+  const popupCloseButtons = document.querySelectorAll(".popup__close");
+
+  const popupClassActive = "popup_active";
+
+  const contactsFormName = "contacts";
+  const contactsForm = document.querySelector(
+    `form[name='${contactsFormName}']`
   );
-
-  const form = document.querySelector("form[name='conatcts-form']");
+  const contactsFormRequiredElements =
+    document.querySelectorAll("[data-required]");
+  const contactsFormPhoneElement = contactsForm.querySelector(
+    `#${contactsFormName}-phone`
+  );
   const formElements = document.querySelectorAll(".form__input");
-  const formRequiredElements = document.querySelectorAll("[data-required]");
-
-  const thankYouPopopupClassActive = `${thankYouPopopup.className}_active`;
 
   const inputMessageClass = "form__error-message";
   const inputMessageClassActive = `${inputMessageClass}_active`;
@@ -28,67 +34,60 @@ document.addEventListener("DOMContentLoaded", function () {
   const errorMessages = {
     emptyName: "Введите имя",
     emptyPhone: "Введите телефон",
+    emptyWebsite: "Введите телефон",
     emptyEmail: "Введите email",
     wrongPhone: "Неверный телефон",
+    wrongWebsite: "Неверный телефон",
     wrongEmail: "Неверный email",
   };
 
+  const topUpAccountButton = document.querySelector(
+    "button[name=top-up-account]"
+  );
+
   //faq list collapse
   const allFaqItems = document.querySelectorAll(".faq-item");
-  allFaqItems.forEach((item) => {
-    const answerButton = item.querySelector(".faq-item__button");
-    const answerWrapper = item.querySelector(".faq-item__answer-wrapper");
 
-    answerButton.addEventListener("click", () => {
-      faqCollapseAnimation(answerButton, answerWrapper);
-    });
-    answerButton.addEventListener("keydown", (e) => {
-      if (e.key === " " || e.key === "Enter" || e.key === "Spacebar") {
-        e.preventDefault();
+  if (allFaqItems.length) {
+    allFaqItems.forEach((item) => {
+      const answerButton = item.querySelector(".faq-item__button");
+      const answerWrapper = item.querySelector(".faq-item__answer-wrapper");
+
+      answerButton.addEventListener("click", () => {
         faqCollapseAnimation(answerButton, answerWrapper);
-      }
+      });
+      answerButton.addEventListener("keydown", (e) => {
+        if (e.key === " " || e.key === "Enter" || e.key === "Spacebar") {
+          e.preventDefault();
+          faqCollapseAnimation(answerButton, answerWrapper);
+        }
+      });
     });
-  });
-
-  function faqCollapseAnimation(currentAnswerButton, currentAnswerWrapper) {
-    if (currentAnswerButton.length && currentAnswerWrapper.length) return;
-    const currentAnswerItem = currentAnswerButton.parentElement;
-
-    if (!currentAnswerItem.classList.contains("_active")) {
-      allFaqItems.forEach((e) => {
-        e.classList.add("_not-active");
-        e.classList.remove("_active");
-        e.querySelector(".faq-item__answer-wrapper").removeAttribute("style");
-      });
-
-      currentAnswerItem.classList.add("_active");
-      currentAnswerItem.classList.remove("_not-active");
-      currentAnswerWrapper.style.height = `${currentAnswerWrapper.firstElementChild.offsetHeight}px`;
-    } else {
-      allFaqItems.forEach((e) => {
-        e.classList.remove("_active", "_not-active");
-        e.querySelector(".faq-item__answer-wrapper").removeAttribute("style");
-      });
-    }
   }
 
   //popup click events
 
-  popupCloseButton.addEventListener("click", () => {
-    myPopupOverlay.hide();
-    thankYouPopopup.classList.remove(thankYouPopopupClassActive);
+  popupCloseButtons.forEach((elem) => {
+    elem.addEventListener("click", () => {
+      myPopupOverlay.hide();
+      thankYouPopopup.classList.remove(popupClassActive);
+      topUpPopopup.classList.remove(popupClassActive);
+    });
   });
 
   myPopupOverlay.element.addEventListener("click", () => {
     myPopupOverlay.hide();
-    thankYouPopopup.classList.remove(thankYouPopopupClassActive);
+    thankYouPopopup.classList.remove(popupClassActive);
+    topUpPopopup.classList.remove(popupClassActive);
   });
 
-  // form placeholder state movement //
+  // "contacts" form placeholder state movement //
 
-  if (formElements.length) {
+  if (formElements) {
     formElements.forEach((elem) => {
       const elemLabel = elem.previousElementSibling || elem.nextElementSibling;
+      if (!elemLabel.classList.contains("form__label_placeholder")) return;
+
       changePlaceholderState(elem.value, elemLabel);
 
       elem.addEventListener("focusin", (e) =>
@@ -98,27 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
         changePlaceholderState(elem.value, elemLabel, e.type)
       );
     });
-  }
-
-  function changePlaceholderState(elemValue, label, event = "init") {
-    if (
-      (!elemValue && event == "init") ||
-      (!!elemValue && event == "focusout")
-    ) {
-      return;
-    }
-
-    const placeholderClassActive = "form__label_placeholder_active";
-
-    switch (event) {
-      case "init":
-      case "focusin":
-        label.classList.add(placeholderClassActive);
-        break;
-      case "focusout":
-        label.classList.remove(placeholderClassActive);
-        break;
-    }
   }
 
   // swiper //
@@ -168,12 +146,18 @@ document.addEventListener("DOMContentLoaded", function () {
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
   };
+  const validateWebsite = (website) => {
+    return website.match(
+      /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&=]*)/
+    );
+  };
 
-  if (form.length) {
-    form.addEventListener("submit", (e) => {
+  if (contactsForm) {
+    contactsForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      let elemsWithErrors = 0;
 
-      formRequiredElements.forEach((currentElement) => {
+      contactsFormRequiredElements.forEach((currentElement) => {
         const currentElementSiblings = [
           currentElement.previousElementSibling,
           currentElement.nextElementSibling,
@@ -197,8 +181,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         switch (currentElement.id) {
-          case "f-email":
+          case `${contactsFormName}-email`:
             if (!validateEmail(currentElement.value)) {
+              setValidationClasses(emptyParams, "wrong");
+              break;
+            }
+          // eslint-disable-next-line no-fallthrough
+          case `${contactsFormName}-website`:
+            if (!validateWebsite(currentElement.value)) {
               setValidationClasses(emptyParams, "wrong");
               break;
             }
@@ -209,16 +199,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
-      const elemsWithErrors = document.querySelectorAll(
+      elemsWithErrors = document.querySelectorAll(
         "[data-required].form__input_error"
       ).length;
 
       if (elemsWithErrors) return;
 
       myPopupOverlay.show();
-      thankYouPopopup.classList.add(thankYouPopopupClassActive);
+      thankYouPopopup.classList.add(popupClassActive);
 
-      const data = new FormData(form);
+      const data = new FormData(contactsForm);
       let dataArray = [];
       console.info("%cДанные формы", "color: chartreuse; font-size: 160%");
       for (const [name, value] of data) {
@@ -230,43 +220,66 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       console.info("Массив: ", dataArray);
 
-      formRequiredElements.forEach((e) => {
+      contactsFormRequiredElements.forEach((e) => {
         e.classList.remove(inputClassValid);
       });
-      form.reset();
+      contactsForm.reset();
     });
   }
 
-  form.querySelector("#f-phone").addEventListener("input", (e) => {
-    let y = e.target.value.replace(/((?!\+)\D+)+/g, "");
-    //let x1 = y.match(/^(\+7{0,2})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-    let x1 = y.match(/^(\+\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-    let phoneArray = "",
-      mre = 1; /*matched RegEx*/
+  if (contactsFormPhoneElement) {
+    validatePhoneNumber(contactsFormPhoneElement);
+  }
 
-    if (x1 === null || !x1[mre]) {
-      phoneArray = "";
-    } else if (x1[mre] && !x1[mre + 1]) {
-      phoneArray = `${x1[mre]}`;
-    } else if (x1[mre] && x1[mre + 1] && !x1[mre + 2]) {
-      phoneArray = `${x1[mre]} (${x1[mre + 1]}`;
-    } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && !x1[mre + 3]) {
-      phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}`;
-    } else if (
-      x1[mre] &&
-      x1[mre + 1] &&
-      x1[mre + 2] &&
-      x1[mre + 3] &&
-      !x1[mre + 4]
+  if (topUpAccountButton) {
+    topUpAccountButton.addEventListener("click", () => {
+      myPopupOverlay.show();
+      topUpPopopup.classList.add(popupClassActive);
+    });
+  }
+
+  function changePlaceholderState(elemValue, label, event = "init") {
+    if (
+      (!elemValue && event == "init") ||
+      (!!elemValue && event == "focusout")
     ) {
-      phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${x1[mre + 3]}`;
-    } else {
-      phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${x1[mre + 3]}-${
-        x1[mre + 4]
-      }`;
+      return;
     }
-    e.target.value = phoneArray;
-  });
+
+    const placeholderClassActive = "form__label_placeholder_active";
+
+    switch (event) {
+      case "init":
+      case "focusin":
+        label.classList.add(placeholderClassActive);
+        break;
+      case "focusout":
+        label.classList.remove(placeholderClassActive);
+        break;
+    }
+  }
+
+  function faqCollapseAnimation(currentAnswerButton, currentAnswerWrapper) {
+    if (currentAnswerButton && currentAnswerWrapper) return;
+    const currentAnswerItem = currentAnswerButton.parentElement;
+
+    if (!currentAnswerItem.classList.contains("_active")) {
+      allFaqItems.forEach((e) => {
+        e.classList.add("_not-active");
+        e.classList.remove("_active");
+        e.querySelector(".faq-item__answer-wrapper").removeAttribute("style");
+      });
+
+      currentAnswerItem.classList.add("_active");
+      currentAnswerItem.classList.remove("_not-active");
+      currentAnswerWrapper.style.height = `${currentAnswerWrapper.firstElementChild.offsetHeight}px`;
+    } else {
+      allFaqItems.forEach((e) => {
+        e.classList.remove("_active", "_not-active");
+        e.querySelector(".faq-item__answer-wrapper").removeAttribute("style");
+      });
+    }
+  }
 
   function setValidationClasses(elemParams, errorType = "") {
     const curEl = elemParams[0];
@@ -298,13 +311,16 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isElemHasClass && errorType == "empty") {
       curElLabel.classList.add(inputMessageClassActive);
       switch (curEl.id) {
-        case "f-name":
+        case `${contactsFormName}-name`:
           curElLabel.textContent = errorMessages.emptyName;
           break;
-        case "f-email":
+        case `${contactsFormName}-email`:
           curElLabel.textContent = errorMessages.emptyEmail;
           break;
-        case "f-phone":
+        case `${contactsFormName}-website`:
+          curElLabel.textContent = errorMessages.emptyWebsite;
+          break;
+        case `${contactsFormName}-phone`:
           curElLabel.textContent = errorMessages.emptyPhone;
           break;
       }
@@ -313,15 +329,53 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isElemHasClass && errorType == "wrong") {
       curElLabel.classList.add(inputMessageClassActive);
       switch (curEl.id) {
-        case "f-email":
+        case `${contactsFormName}-email`:
           curElLabel.textContent = errorMessages.wrongEmail;
           break;
-        case "f-phone":
+        case `${contactsFormName}-website`:
+          curElLabel.textContent = errorMessages.wrongWebsite;
+          break;
+        case `${contactsFormName}-phone`:
           curElLabel.textContent = errorMessages.wrongPhone;
           break;
       }
       return;
     }
+  }
+
+  function validatePhoneNumber(inputElement) {
+    inputElement.addEventListener("input", (e) => {
+      let y = e.target.value.replace(/((?!\+)\D+)+/g, "");
+      //let x1 = y.match(/^(\+7{0,2})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+      let x1 = y.match(/^(\+\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+      let phoneArray = "",
+        mre = 1; /*matched RegEx*/
+
+      if (x1 === null || !x1[mre]) {
+        phoneArray = "";
+      } else if (x1[mre] && !x1[mre + 1]) {
+        phoneArray = `${x1[mre]}`;
+      } else if (x1[mre] && x1[mre + 1] && !x1[mre + 2]) {
+        phoneArray = `${x1[mre]} (${x1[mre + 1]}`;
+      } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && !x1[mre + 3]) {
+        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}`;
+      } else if (
+        x1[mre] &&
+        x1[mre + 1] &&
+        x1[mre + 2] &&
+        x1[mre + 3] &&
+        !x1[mre + 4]
+      ) {
+        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${
+          x1[mre + 3]
+        }`;
+      } else {
+        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${
+          x1[mre + 3]
+        }-${x1[mre + 4]}`;
+      }
+      e.target.value = phoneArray;
+    });
   }
 });
 

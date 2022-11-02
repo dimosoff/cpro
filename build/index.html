@@ -518,31 +518,31 @@
     </div>
     <div class="contacts__row row">
       <div class="contacts__column">
-        <form class="form" name="conatcts-form" novalidate>
+        <form class="form" name="contacts" novalidate>
   <div class="form__row row not-default-row">
     <div class="form__item form__item_half not-default-column">
-      <label for="f-name" class="form__label" aria-hidden="true">Имя<span class="required-star">*</span></label>
-      <input class="form__input" type="text" name="f-name" id="f-name" value="" data-required="" placeholder="Имя*">
+      <label for="contacts-name" class="form__label" aria-hidden="true">Имя<span class="required-star">*</span></label>
+      <input class="form__input" type="text" name="contacts-name" id="contacts-name" value="" data-required="" placeholder="Имя*">
       <p class="form__error-message"></p>
     </div>
     <div class="form__item form__item_half not-default-column">
-      <label for="f-phone" class="form__label" aria-hidden="true">Телефон<span class="required-star">*</span></label>
-      <input class="form__input" type="tel" name="f-phone" id="f-phone" value="" data-required="" placeholder="Телефон*">
+      <label for="contacts-phone" class="form__label" aria-hidden="true">Телефон<span class="required-star">*</span></label>
+      <input class="form__input" type="tel" name="contacts-phone" id="contacts-phone" value="" data-required="" placeholder="Телефон*">
       <p class="form__error-message"></p>
     </div>
     <div class="form__item not-default-column">
-      <label for="f-email" class="form__label" aria-hidden="true">E-mail<span class="required-star">*</span></label>
-      <input class="form__input" type="text" name="f-email" id="f-email" value="" data-required="" placeholder="E-mail*">
+      <label for="contacts-email" class="form__label" aria-hidden="true">E-mail<span class="required-star">*</span></label>
+      <input class="form__input" type="text" name="contacts-email" id="contacts-email" value="" data-required="" placeholder="E-mail*">
       <p class="form__error-message"></p>
     </div>
     <div class="form__item not-default-column form__item_more-gap">
-      <label for="f-description" class="form__label" aria-hidden="true">Комментарий</label>
-      <textarea class="form__input" name="f-description" id="f-description" placeholder="Комментарий"></textarea>
+      <label for="contacts-description" class="form__label" aria-hidden="true">Комментарий</label>
+      <textarea class="form__input" name="contacts-description" id="contacts-description" placeholder="Комментарий"></textarea>
     </div>
     
     <div class="form__item not-default-column">
       <div class="form__button-wrapper">
-        <button class="form__button _btn" type="submit" name="f-submit" id="f-submit">Отправить</button>
+        <button class="form__button _btn" type="submit" name="contacts-submit" id="contacts-submit">Отправить</button>
         <span class="form__personal-data">Нажимая на кнопку, вы соглашаетесь на обработку <a href="#">персональных
             данных</a></span>
       </div>
@@ -553,7 +553,7 @@
       <div class="contacts__column">
         <div class="contacts__map">
           <iframe class="map" src="https://yandex.com/map-widget/v1/-/CCUZbBcxwD" width="560" height="400"
-            allowfullscreen tabindex="-1" loading="lazy"></iframe>
+            allowfullscreen tabindex="-1" loading="lazy" title="Наше располодение на карте"></iframe>
         </div>
       </div>
     </div>
@@ -665,8 +665,52 @@
 </footer>
   </div>
   <div class="popup-overlay"></div>
-  <div class="thank-you-popup">
-  <button class="thank-you-popup__close-button" type="button" name="thank-you-close">
+  <div class="top-up-popup popup">
+  <button class="top-up-popup__close popup__close" type="button" name="top-up-close">
+    <span class="sr-only">Закрыть</span>
+  </button>
+  <h3 class="top-up-popup__heading heading">Заказать пополнение аккаунта</h3>
+  <form class="form" name="top-up" novalidate>
+  <div class="form__row row not-default-row">
+    <div class="form__item form__item_half not-default-column">
+      <label for="top-up-name" class="form__label" aria-hidden="true">Имя<span class="required-star">*</span></label>
+      <input class="form__input" type="text" name="top-up-name" id="top-up-name" value="" data-required="" placeholder="Имя*">
+      <p class="form__error-message"></p>
+    </div>
+    <div class="form__item form__item_half not-default-column">
+      <label for="top-up-phone" class="form__label" aria-hidden="true">Телефон<span class="required-star">*</span></label>
+      <input class="form__input" type="tel" name="top-up-phone" id="top-up-phone" value="" data-required="" placeholder="Телефон*">
+      <p class="form__error-message"></p>
+    </div>
+    <div class="form__item form__item_half not-default-column">
+      <label for="top-up-website" class="form__label" aria-hidden="true">Ссылка на сайт<span class="required-star">*</span></label>
+      <input class="form__input" type="text" name="top-up-website" id="top-up-website" value="" data-required="" placeholder="Ссылка на сайт*">
+      <p class="form__error-message"></p>
+    </div>
+    <div class="form__item form__item_half not-default-column">
+      <label for="top-up-email" class="form__label" aria-hidden="true">E-mail<span class="required-star">*</span></label>
+      <input class="form__input" type="text" name="top-up-email" id="top-up-email" value="" data-required="" placeholder="E-mail*">
+      <p class="form__error-message"></p>
+    </div>
+    <div class="form__item not-default-column">
+      <input class="form__input sr-only" type="file" name="top-up-file" id="top-up-file">
+      <label for="top-up-file" class="form__label">Прикрепить реквизиты</label>
+    </div>
+    <div class="form__item not-default-column">
+      <label for="top-up-description" class="form__label" aria-hidden="true">Комментарий</label>
+      <textarea class="form__input" name="top-up-description" id="top-up-description" placeholder="Комментарий"></textarea>
+    </div>
+    
+    <div class="form__item not-default-column">
+      <div class="form__button-wrapper">
+        <button class="form__button _btn" type="submit" name="top-up-submit" id="top-up-submit">Отправить заявку</button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+  <div class="thank-you-popup popup">
+  <button class="thank-you-popup__close popup__close" type="button" name="thank-you-close">
     <span class="sr-only">Закрыть</span>
   </button>
   <span>Спасибо, с Вами скоро свяжутся.</span>

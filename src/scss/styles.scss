@@ -2,13 +2,14 @@ $white: #fff;
 $dark: #4e4e4e;
 $darker: #333333;
 $darkest: #32343c;
+$second-text-color: #6f6f6f;
 $secondary-color: #aa7af8;
 $focus-color: #a263e8; //#43abf0;
 $accent-color: #a97cf0;
 $required-and-error: #f35d4e;
 $body-background: #f5f5f5;
 $header-background: $white;
-$secondary-background: #f6f4f9;
+$secondary-background: #f1f3f9;
 $scrolled-color: $accent-color;
 $slide-hr: #eae8ec;
 $slide-date: #c4c4c4;
@@ -17,8 +18,8 @@ $f-item: #473e69;
 $f-label-placeholder-active: #807d8d;
 $badge-color: #9056ec;
 $border-grey: #e1e1e1;
-$faq-text-color: #6f6f6f;
 $faq-side-bar-text: #f1f3f9;
+$popup-button-color: #9157ec;
 
 $main-gradient: linear-gradient(89.97deg, #9056ec 0.58%, #bb8fff 79.26%);
 $faq-gradient: linear-gradient(89.97deg, #fdd65b 0.58%, #f28a0c 99.97%);
@@ -237,7 +238,7 @@ body {
       overflow-y: auto;
       overflow-x: hidden;
       flex-direction: column-reverse;
-      background-color: $secondary-background;
+      background-color: $white;
       transform-origin: right center;
       transform: perspective(100px) translateX(100%) rotateY(-20deg);
       transition: transform $transition3, top $transition3;
@@ -1776,7 +1777,7 @@ body {
     }
   }
   &__answer {
-    color: $faq-text-color;
+    color: $second-text-color;
     line-height: 1.375;
 
     @media ($desktop-min) {
@@ -2110,14 +2111,16 @@ body {
     }
   }
   &__label {
-    display: none;
     font-size: 14px;
     line-height: 1.375;
 
+    &[aria-hidden="true"] {
+      display: none;
+    }
     &_placeholder {
       position: absolute;
       font-size: 14px;
-      color: $faq-text-color;
+      color: $second-text-color;
       top: 14px;
       left: 25px;
       cursor: default;
@@ -2150,6 +2153,29 @@ body {
       font-size: 14px;
     }
 
+    &[type="file"] {
+      & ~ label {
+        width: 100%;
+        color: $second-text-color;
+        cursor: pointer;
+        display: block;
+        @extend %f-item-element;
+        background: url("../images/form-file-icon.svg") 98% 15px/15px auto
+          no-repeat $white;
+        background-position: right 15px top 18px;
+
+        @media ($tablet-max) {
+          font-size: 15px;
+        }
+        @media ($tablet-min) {
+          padding: 15px 15px 15px 25px;
+        }
+        @media ($mobile-max) {
+          padding: 13px 29px;
+          font-size: 14px;
+        }
+      }
+    }
     &_error%f-item-input {
       box-shadow: 0 0 10px $required-and-error;
     }
@@ -2160,6 +2186,23 @@ body {
       background: url("../images/valid-icon.svg") 98% 17px/17px auto no-repeat
         $white;
       background-position: right 15px top 18px;
+    }
+
+    &::placeholder {
+      color: $second-text-color;
+      opacity: 1;
+    }
+    &::-webkit-input-placeholder {
+      color: $second-text-color;
+      opacity: 1;
+    }
+    &::-moz-placeholder {
+      color: $second-text-color;
+      opacity: 1;
+    }
+    &:-ms-input-placeholder {
+      color: $second-text-color;
+      opacity: 1;
     }
 
     &:focus-visible {
@@ -2480,20 +2523,20 @@ body {
     visibility: visible;
   }
 }
-.thank-you-popup {
+.popup {
   position: fixed;
   top: 50%;
   left: 50%;
   opacity: 0;
   z-index: 1000;
-  padding: 25px 20px 20px;
+  padding: 28px 34px 30px;
   overflow: hidden;
   transform: translate(-50%, -50%);
   min-width: 250px;
   text-align: center;
   visibility: hidden;
   border-radius: 9px;
-  background-color: $secondary-background;
+  background-color: $white;
   transition: opacity $transition3, visibility $transition3;
 
   &_active {
@@ -2501,7 +2544,7 @@ body {
     opacity: 1;
     visibility: visible;
   }
-  &__close-button {
+  &__close {
     position: absolute;
     top: 7px;
     right: 9px;
@@ -2513,7 +2556,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: transparent;
-    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+    // filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
 
     &%my-gallery-close-pseudo {
       content: "";
@@ -2521,7 +2564,7 @@ body {
       height: 2px;
       display: block;
       position: absolute;
-      background-color: $dark;
+      background-color: $accent-color;
     }
     &:before {
       @extend %my-gallery-close-pseudo;
@@ -2532,6 +2575,8 @@ body {
       transform: rotate(45deg);
     }
   }
+}
+.thank-you-popup {
   span {
     margin: 30px;
     display: block;
@@ -2539,7 +2584,42 @@ body {
   hr {
     border: none;
     margin: 5px 0 5px;
-    border-bottom: 2px solid #eae8ec;
+    opacity: 0.3;
+    border-bottom: 2px solid $accent-color;
+  }
+}
+.top-up-popup {
+  max-width: 537px;
+
+  &__heading {
+    font-size: 22px;
+    // text-align: left;
+  }
+  .form {
+    margin-top: 30px;
+
+    &__input {
+      font-size: 14px;
+      background-color: $secondary-background;
+
+      &[type="file"] {
+        & ~ label {
+          text-align: left;
+          background-color: $secondary-background;
+        }
+      }
+      &:focus-visible {
+        box-shadow: 0 0 10px $secondary-color !important;
+      }
+    }
+    & textarea%f-item-input {
+      min-height: 95px;
+    }
+    &__button {
+      width: 100%;
+      color: $white;
+      background-color: $popup-button-color;
+    }
   }
 }
 @import "_mygallery.scss";

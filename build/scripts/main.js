@@ -204,13 +204,18 @@
     mySetAnchorsEvents;
     const myPopupOverlay2 = myPopupOverlay;
     const thankYouPopopup = document.querySelector(".thank-you-popup");
-    const popupCloseButton = document.querySelector(
-      "button[name='thank-you-close']"
+    const topUpPopopup = document.querySelector(".top-up-popup");
+    const popupCloseButtons = document.querySelectorAll(".popup__close");
+    const popupClassActive = "popup_active";
+    const contactsFormName = "contacts";
+    const contactsForm = document.querySelector(
+      `form[name='${contactsFormName}']`
     );
-    const form = document.querySelector("form[name='conatcts-form']");
+    const contactsFormRequiredElements = document.querySelectorAll("[data-required]");
+    const contactsFormPhoneElement = contactsForm.querySelector(
+      `#${contactsFormName}-phone`
+    );
     const formElements = document.querySelectorAll(".form__input");
-    const formRequiredElements = document.querySelectorAll("[data-required]");
-    const thankYouPopopupClassActive = `${thankYouPopopup.className}_active`;
     const inputMessageClass = "form__error-message";
     const inputMessageClassActive = `${inputMessageClass}_active`;
     const inputClass = "form__input";
@@ -219,55 +224,48 @@
     const errorMessages = {
       emptyName: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0438\u043C\u044F",
       emptyPhone: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0442\u0435\u043B\u0435\u0444\u043E\u043D",
+      emptyWebsite: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0442\u0435\u043B\u0435\u0444\u043E\u043D",
       emptyEmail: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 email",
       wrongPhone: "\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0439 \u0442\u0435\u043B\u0435\u0444\u043E\u043D",
+      wrongWebsite: "\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0439 \u0442\u0435\u043B\u0435\u0444\u043E\u043D",
       wrongEmail: "\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0439 email"
     };
+    const topUpAccountButton = document.querySelector(
+      "button[name=top-up-account]"
+    );
     const allFaqItems = document.querySelectorAll(".faq-item");
-    allFaqItems.forEach((item) => {
-      const answerButton = item.querySelector(".faq-item__button");
-      const answerWrapper = item.querySelector(".faq-item__answer-wrapper");
-      answerButton.addEventListener("click", () => {
-        faqCollapseAnimation(answerButton, answerWrapper);
-      });
-      answerButton.addEventListener("keydown", (e) => {
-        if (e.key === " " || e.key === "Enter" || e.key === "Spacebar") {
-          e.preventDefault();
+    if (allFaqItems.length) {
+      allFaqItems.forEach((item) => {
+        const answerButton = item.querySelector(".faq-item__button");
+        const answerWrapper = item.querySelector(".faq-item__answer-wrapper");
+        answerButton.addEventListener("click", () => {
           faqCollapseAnimation(answerButton, answerWrapper);
-        }
+        });
+        answerButton.addEventListener("keydown", (e) => {
+          if (e.key === " " || e.key === "Enter" || e.key === "Spacebar") {
+            e.preventDefault();
+            faqCollapseAnimation(answerButton, answerWrapper);
+          }
+        });
       });
-    });
-    function faqCollapseAnimation(currentAnswerButton, currentAnswerWrapper) {
-      if (currentAnswerButton.length && currentAnswerWrapper.length)
-        return;
-      const currentAnswerItem = currentAnswerButton.parentElement;
-      if (!currentAnswerItem.classList.contains("_active")) {
-        allFaqItems.forEach((e) => {
-          e.classList.add("_not-active");
-          e.classList.remove("_active");
-          e.querySelector(".faq-item__answer-wrapper").removeAttribute("style");
-        });
-        currentAnswerItem.classList.add("_active");
-        currentAnswerItem.classList.remove("_not-active");
-        currentAnswerWrapper.style.height = `${currentAnswerWrapper.firstElementChild.offsetHeight}px`;
-      } else {
-        allFaqItems.forEach((e) => {
-          e.classList.remove("_active", "_not-active");
-          e.querySelector(".faq-item__answer-wrapper").removeAttribute("style");
-        });
-      }
     }
-    popupCloseButton.addEventListener("click", () => {
-      myPopupOverlay2.hide();
-      thankYouPopopup.classList.remove(thankYouPopopupClassActive);
+    popupCloseButtons.forEach((elem) => {
+      elem.addEventListener("click", () => {
+        myPopupOverlay2.hide();
+        thankYouPopopup.classList.remove(popupClassActive);
+        topUpPopopup.classList.remove(popupClassActive);
+      });
     });
     myPopupOverlay2.element.addEventListener("click", () => {
       myPopupOverlay2.hide();
-      thankYouPopopup.classList.remove(thankYouPopopupClassActive);
+      thankYouPopopup.classList.remove(popupClassActive);
+      topUpPopopup.classList.remove(popupClassActive);
     });
-    if (formElements.length) {
+    if (formElements) {
       formElements.forEach((elem) => {
         const elemLabel = elem.previousElementSibling || elem.nextElementSibling;
+        if (!elemLabel.classList.contains("form__label_placeholder"))
+          return;
         changePlaceholderState(elem.value, elemLabel);
         elem.addEventListener(
           "focusin",
@@ -279,30 +277,21 @@
         );
       });
     }
-    function changePlaceholderState(elemValue, label, event = "init") {
-      if (!elemValue && event == "init" || !!elemValue && event == "focusout") {
-        return;
-      }
-      const placeholderClassActive = "form__label_placeholder_active";
-      switch (event) {
-        case "init":
-        case "focusin":
-          label.classList.add(placeholderClassActive);
-          break;
-        case "focusout":
-          label.classList.remove(placeholderClassActive);
-          break;
-      }
-    }
     const validateEmail = (email) => {
       return email.match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
     };
-    if (form.length) {
-      form.addEventListener("submit", (e) => {
+    const validateWebsite = (website) => {
+      return website.match(
+        /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&=]*)/
+      );
+    };
+    if (contactsForm) {
+      contactsForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        formRequiredElements.forEach((currentElement) => {
+        let elemsWithErrors = 0;
+        contactsFormRequiredElements.forEach((currentElement) => {
           const currentElementSiblings = [
             currentElement.previousElementSibling,
             currentElement.nextElementSibling
@@ -324,8 +313,13 @@
             return;
           }
           switch (currentElement.id) {
-            case "f-email":
+            case `${contactsFormName}-email`:
               if (!validateEmail(currentElement.value)) {
+                setValidationClasses(emptyParams, "wrong");
+                break;
+              }
+            case `${contactsFormName}-website`:
+              if (!validateWebsite(currentElement.value)) {
                 setValidationClasses(emptyParams, "wrong");
                 break;
               }
@@ -334,14 +328,14 @@
               break;
           }
         });
-        const elemsWithErrors = document.querySelectorAll(
+        elemsWithErrors = document.querySelectorAll(
           "[data-required].form__input_error"
         ).length;
         if (elemsWithErrors)
           return;
         myPopupOverlay2.show();
-        thankYouPopopup.classList.add(thankYouPopopupClassActive);
-        const data = new FormData(form);
+        thankYouPopopup.classList.add(popupClassActive);
+        const data = new FormData(contactsForm);
         let dataArray = [];
         console.info("%c\u0414\u0430\u043D\u043D\u044B\u0435 \u0444\u043E\u0440\u043C\u044B", "color: chartreuse; font-size: 160%");
         for (const [name, value] of data) {
@@ -352,31 +346,56 @@
           );
         }
         console.info("\u041C\u0430\u0441\u0441\u0438\u0432: ", dataArray);
-        formRequiredElements.forEach((e2) => {
+        contactsFormRequiredElements.forEach((e2) => {
           e2.classList.remove(inputClassValid);
         });
-        form.reset();
+        contactsForm.reset();
       });
     }
-    form.querySelector("#f-phone").addEventListener("input", (e) => {
-      let y = e.target.value.replace(/((?!\+)\D+)+/g, "");
-      let x1 = y.match(/^(\+\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-      let phoneArray = "", mre = 1;
-      if (x1 === null || !x1[mre]) {
-        phoneArray = "";
-      } else if (x1[mre] && !x1[mre + 1]) {
-        phoneArray = `${x1[mre]}`;
-      } else if (x1[mre] && x1[mre + 1] && !x1[mre + 2]) {
-        phoneArray = `${x1[mre]} (${x1[mre + 1]}`;
-      } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && !x1[mre + 3]) {
-        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}`;
-      } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && x1[mre + 3] && !x1[mre + 4]) {
-        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${x1[mre + 3]}`;
-      } else {
-        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${x1[mre + 3]}-${x1[mre + 4]}`;
+    if (contactsFormPhoneElement) {
+      validatePhoneNumber(contactsFormPhoneElement);
+    }
+    if (topUpAccountButton) {
+      topUpAccountButton.addEventListener("click", () => {
+        myPopupOverlay2.show();
+        topUpPopopup.classList.add(popupClassActive);
+      });
+    }
+    function changePlaceholderState(elemValue, label, event = "init") {
+      if (!elemValue && event == "init" || !!elemValue && event == "focusout") {
+        return;
       }
-      e.target.value = phoneArray;
-    });
+      const placeholderClassActive = "form__label_placeholder_active";
+      switch (event) {
+        case "init":
+        case "focusin":
+          label.classList.add(placeholderClassActive);
+          break;
+        case "focusout":
+          label.classList.remove(placeholderClassActive);
+          break;
+      }
+    }
+    function faqCollapseAnimation(currentAnswerButton, currentAnswerWrapper) {
+      if (currentAnswerButton && currentAnswerWrapper)
+        return;
+      const currentAnswerItem = currentAnswerButton.parentElement;
+      if (!currentAnswerItem.classList.contains("_active")) {
+        allFaqItems.forEach((e) => {
+          e.classList.add("_not-active");
+          e.classList.remove("_active");
+          e.querySelector(".faq-item__answer-wrapper").removeAttribute("style");
+        });
+        currentAnswerItem.classList.add("_active");
+        currentAnswerItem.classList.remove("_not-active");
+        currentAnswerWrapper.style.height = `${currentAnswerWrapper.firstElementChild.offsetHeight}px`;
+      } else {
+        allFaqItems.forEach((e) => {
+          e.classList.remove("_active", "_not-active");
+          e.querySelector(".faq-item__answer-wrapper").removeAttribute("style");
+        });
+      }
+    }
     function setValidationClasses(elemParams, errorType = "") {
       const curEl = elemParams[0];
       const curElSibl = elemParams[1];
@@ -400,13 +419,16 @@
       if (isElemHasClass && errorType == "empty") {
         curElLabel.classList.add(inputMessageClassActive);
         switch (curEl.id) {
-          case "f-name":
+          case `${contactsFormName}-name`:
             curElLabel.textContent = errorMessages.emptyName;
             break;
-          case "f-email":
+          case `${contactsFormName}-email`:
             curElLabel.textContent = errorMessages.emptyEmail;
             break;
-          case "f-phone":
+          case `${contactsFormName}-website`:
+            curElLabel.textContent = errorMessages.emptyWebsite;
+            break;
+          case `${contactsFormName}-phone`:
             curElLabel.textContent = errorMessages.emptyPhone;
             break;
         }
@@ -415,15 +437,39 @@
       if (isElemHasClass && errorType == "wrong") {
         curElLabel.classList.add(inputMessageClassActive);
         switch (curEl.id) {
-          case "f-email":
+          case `${contactsFormName}-email`:
             curElLabel.textContent = errorMessages.wrongEmail;
             break;
-          case "f-phone":
+          case `${contactsFormName}-website`:
+            curElLabel.textContent = errorMessages.wrongWebsite;
+            break;
+          case `${contactsFormName}-phone`:
             curElLabel.textContent = errorMessages.wrongPhone;
             break;
         }
         return;
       }
+    }
+    function validatePhoneNumber(inputElement) {
+      inputElement.addEventListener("input", (e) => {
+        let y = e.target.value.replace(/((?!\+)\D+)+/g, "");
+        let x1 = y.match(/^(\+\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+        let phoneArray = "", mre = 1;
+        if (x1 === null || !x1[mre]) {
+          phoneArray = "";
+        } else if (x1[mre] && !x1[mre + 1]) {
+          phoneArray = `${x1[mre]}`;
+        } else if (x1[mre] && x1[mre + 1] && !x1[mre + 2]) {
+          phoneArray = `${x1[mre]} (${x1[mre + 1]}`;
+        } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && !x1[mre + 3]) {
+          phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}`;
+        } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && x1[mre + 3] && !x1[mre + 4]) {
+          phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${x1[mre + 3]}`;
+        } else {
+          phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${x1[mre + 3]}-${x1[mre + 4]}`;
+        }
+        e.target.value = phoneArray;
+      });
     }
   });
 })();

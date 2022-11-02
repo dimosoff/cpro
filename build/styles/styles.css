@@ -576,7 +576,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     flex-direction: column-reverse;
-    background-color: #f6f4f9;
+    background-color: #fff;
     transform-origin: right center;
     transform: perspective(100px) translateX(100%) rotateY(-20deg);
     transition: transform 0.3s ease, top 0.3s ease;
@@ -2559,7 +2559,7 @@ body {
     margin-bottom: 7px;
   }
 }
-.form__item .form__input {
+.form__item .form__input[type=file] ~ label, .form__item .form__input {
   border: none;
   border-radius: 5px;
   background-color: #fff;
@@ -2577,9 +2577,11 @@ body {
   margin-bottom: 27px;
 }
 .form__label {
-  display: none;
   font-size: 14px;
   line-height: 1.375;
+}
+.form__label[aria-hidden=true] {
+  display: none;
 }
 .form__label_placeholder {
   position: absolute;
@@ -2618,12 +2620,52 @@ body {
     font-size: 14px;
   }
 }
+.form__input[type=file] ~ label {
+  width: 100%;
+  color: #6f6f6f;
+  cursor: pointer;
+  display: block;
+  background: url("../images/form-file-icon.svg") 98% 15px/15px auto no-repeat #fff;
+  background-position: right 15px top 18px;
+}
+@media (max-width: 991.98px) {
+  .form__input[type=file] ~ label {
+    font-size: 15px;
+  }
+}
+@media (min-width: 576px) {
+  .form__input[type=file] ~ label {
+    padding: 15px 15px 15px 25px;
+  }
+}
+@media (max-width: 575.98px) {
+  .form__input[type=file] ~ label {
+    padding: 13px 29px;
+    font-size: 14px;
+  }
+}
 .form__input_error.form__input {
   box-shadow: 0 0 10px #f35d4e;
 }
 .form__input:-webkit-autofill, .form__input:-webkit-autofill:hover, .form__input:-webkit-autofill:focus, .form__input_valid.form__input {
   background: url("../images/valid-icon.svg") 98% 17px/17px auto no-repeat #fff;
   background-position: right 15px top 18px;
+}
+.form__input::placeholder {
+  color: #6f6f6f;
+  opacity: 1;
+}
+.form__input::-webkit-input-placeholder {
+  color: #6f6f6f;
+  opacity: 1;
+}
+.form__input::-moz-placeholder {
+  color: #6f6f6f;
+  opacity: 1;
+}
+.form__input:-ms-input-placeholder {
+  color: #6f6f6f;
+  opacity: 1;
 }
 .form__input:focus-visible {
   box-shadow: 0 0 10px #fff !important;
@@ -2913,28 +2955,28 @@ body {
   visibility: visible;
 }
 
-.thank-you-popup {
+.popup {
   position: fixed;
   top: 50%;
   left: 50%;
   opacity: 0;
   z-index: 1000;
-  padding: 25px 20px 20px;
+  padding: 28px 34px 30px;
   overflow: hidden;
   transform: translate(-50%, -50%);
   min-width: 250px;
   text-align: center;
   visibility: hidden;
   border-radius: 9px;
-  background-color: #f6f4f9;
+  background-color: #fff;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-.thank-you-popup_active {
+.popup_active {
   z-index: 1050;
   opacity: 1;
   visibility: visible;
 }
-.thank-you-popup__close-button {
+.popup__close {
   position: absolute;
   top: 7px;
   right: 9px;
@@ -2946,22 +2988,22 @@ body {
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
 }
-.thank-you-popup__close-button:after, .thank-you-popup__close-button:before {
+.popup__close:after, .popup__close:before {
   content: "";
   width: 20px;
   height: 2px;
   display: block;
   position: absolute;
-  background-color: #4e4e4e;
+  background-color: #a97cf0;
 }
-.thank-you-popup__close-button:before {
+.popup__close:before {
   transform: rotate(-45deg);
 }
-.thank-you-popup__close-button:after {
+.popup__close:after {
   transform: rotate(45deg);
 }
+
 .thank-you-popup span {
   margin: 30px;
   display: block;
@@ -2969,7 +3011,37 @@ body {
 .thank-you-popup hr {
   border: none;
   margin: 5px 0 5px;
-  border-bottom: 2px solid #eae8ec;
+  opacity: 0.3;
+  border-bottom: 2px solid #a97cf0;
+}
+
+.top-up-popup {
+  max-width: 537px;
+}
+.top-up-popup__heading {
+  font-size: 22px;
+}
+.top-up-popup .form {
+  margin-top: 30px;
+}
+.top-up-popup .form__input {
+  font-size: 14px;
+  background-color: #f1f3f9;
+}
+.top-up-popup .form__input[type=file] ~ label {
+  text-align: left;
+  background-color: #f1f3f9;
+}
+.top-up-popup .form__input:focus-visible {
+  box-shadow: 0 0 10px #aa7af8 !important;
+}
+.top-up-popup .form textarea.form__input {
+  min-height: 95px;
+}
+.top-up-popup .form__button {
+  width: 100%;
+  color: #fff;
+  background-color: #9157ec;
 }
 
 .my-gallery {
