@@ -1563,17 +1563,19 @@ body {
     border-radius: 10px;
     background-color: $white;
 
-    @media ($desktop-min) {
-      padding: 29px 40px 44px 48px;
-    }
-    @media ($tablet-max) and ($tablet-mad) {
-      padding: 29px 30px 44px 38px;
-    }
-    @media ($tablet-mid) and ($tablet-min) {
-      padding: 19px 20px 34px 28px;
-    }
-    @media ($mobile-max) {
-      padding: 26px 34px 39px 30px;
+    &_list {
+      @media ($desktop-min) {
+        padding: 29px 40px 44px 48px;
+      }
+      @media ($tablet-max) and ($tablet-mad) {
+        padding: 29px 30px 44px 38px;
+      }
+      @media ($tablet-mid) and ($tablet-min) {
+        padding: 19px 20px 34px 28px;
+      }
+      @media ($mobile-max) {
+        padding: 26px 34px 39px 30px;
+      }
     }
   }
   &__heading {
