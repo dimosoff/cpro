@@ -416,6 +416,8 @@ body {
         top: 2px;
         left: 0;
         position: absolute;
+        width: 16px;
+        height: 16px;
       }
     }
     &:not(a) {
@@ -436,6 +438,8 @@ body {
     // }
   }
   &__link-icon {
+    width: 31px;
+    height: 31px;
     text-decoration: none;
 
     & + & {
@@ -501,8 +505,14 @@ body {
   line-height: 1.357;
   text-decoration: none;
 
-  &__label {
-    text-decoration-line: underline;
+  @media ($desktop-min) {
+    &:hover {
+      @extend %email-hover;
+    }
+
+    %email-hover &__label {
+      text-decoration-line: underline;
+    }
   }
 }
 .timetable {
@@ -1602,6 +1612,7 @@ body {
   &__button {
     width: 100%;
     border: none;
+    cursor: pointer;
     display: flex;
     text-align: left;
     align-items: center;
@@ -1684,7 +1695,7 @@ body {
       transform: rotate(0);
       transition: transform $transition3;
 
-      & #hide-to-minus {
+      & .hide-to-minus {
         opacity: 1;
         transition: opacity $transition3;
       }
@@ -1697,7 +1708,7 @@ body {
       & svg {
         transform: rotate(90deg);
 
-        & #hide-to-minus {
+        & .hide-to-minus {
           opacity: 0;
         }
       }
