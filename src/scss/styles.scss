@@ -2045,6 +2045,15 @@ body {
       }
     }
   }
+  .form {
+    &__item {
+      &_half {
+        @media ($desktop-min), ($tablet-mid) and ($tablet-min) {
+          @include column-size(50%, 7.5px);
+        }
+      }
+    }
+  }
   &__map {
     width: 100%;
     height: 100%;
@@ -2101,11 +2110,8 @@ body {
     &:last-child {
       margin-bottom: 0;
     }
-    &_half {
-      @media ($desktop-min), ($tablet-mid) and ($tablet-min) {
-        @include column-size(50%, 7.5px);
-      }
-    }
+    // &_half {
+    // }
     &_more-gap {
       margin-bottom: 27px;
     }
@@ -2591,13 +2597,39 @@ body {
 .top-up-popup {
   max-width: 537px;
 
+  @media ($tablet-max) and ($tablet-min) {
+    min-width: 370px;
+  }
+  @media ($mobile-max) {
+    width: calc(100% - 30px);
+    padding: 23px 24px 25px;
+    min-width: 290px;
+    max-width: 360px;
+  }
+
   &__heading {
-    font-size: 22px;
-    // text-align: left;
+    @media ($tablet-min) {
+      font-size: 22px;
+    }
+    @media ($mobile-max) {
+      font-size: 18px;
+    }
   }
   .form {
-    margin-top: 30px;
+    @media ($tablet-min) {
+      margin-top: 30px;
+    }
+    @media ($mobile-max) {
+      margin-top: 20px;
+    }
 
+    &__item {
+      &_half {
+        @media ($desktop-min) {
+          @include column-size(50%, 7.5px);
+        }
+      }
+    }
     &__input {
       font-size: 14px;
       background-color: $secondary-background;

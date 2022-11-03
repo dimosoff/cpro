@@ -263,10 +263,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function faqCollapseAnimation(currentAnswerButton, currentAnswerWrapper) {
-    if (currentAnswerButton && currentAnswerWrapper) return;
+    if (!currentAnswerButton && !currentAnswerWrapper) return;
     const currentAnswerItem = currentAnswerButton.parentElement;
 
     if (!currentAnswerItem.classList.contains("_active")) {
+      console.log("active");
       allFaqItems.forEach((e) => {
         e.classList.add("_not-active");
         e.classList.remove("_active");
