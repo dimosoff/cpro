@@ -18,6 +18,7 @@ import { scss } from "./gulp/tasks/scss.js";
 import { scripts } from "./gulp/tasks/scripts.js";
 import { images, imagesWebp } from "./gulp/tasks/images.js";
 import { fonts } from "./gulp/tasks/fonts.js";
+import { killTask } from "./gulp/tasks/kill-task.js";
 
 function watcher() {
   gulp.watch(path.watch.files, copy);
@@ -30,7 +31,10 @@ function watcher() {
 const mainTasks = gulp.parallel(copy, html, scss, scripts, images);
 
 const dev = gulp.series(reset, mainTasks, gulp.parallel(watcher, server));
-const build = gulp.series(reset, mainTasks, imagesWebp);
+const build = gulp.series(reset, mainTasks, imagesWebp, killTask);
+
+export { dev };
+export { build };
 
 gulp.task("dev", dev);
 gulp.task("build", build);

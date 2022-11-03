@@ -1,0 +1,46 @@
+<section class="why-we" id="why-we">
+  <div class="why-we__container container">
+    <div class="why-we__row row">
+      <h2 class="why-we__heading heading">Почему мы?</h2>
+    </div>
+    <div class="why-we__row row why-we__slides">
+      @@include('./src/html/why-we-slide.html', {
+      "img-src": "images/technical-support.png",
+      "img-alt": "Техническая поддрежка по вопросам зачисления",
+      "label": "Техническая поддрежка по вопросам зачисления"
+      })
+      @@include('./src/html/why-we-slide.html', {
+      "img-src": "images/billing.png",
+      "img-alt": "Зачисления на аккаунт производим в день осуществления оплаты",
+      "label": "Зачисления на аккаунт производим в день осуществления оплаты"
+      })
+      @@include('./src/html/why-we-slide.html', {
+      "img-src": "images/reporting.png",
+      "img-alt": "Ежемесячная отчетность по выполненным работам",
+      "label": "Ежемесячная отчетность по выполненным работам"
+      })
+      @@include('./src/html/why-we-slide.html', {
+      "img-src": "images/documents.png",
+      "img-alt": "Закрывающие документы предоставляем каждый месяц",
+      "label": "Закрывающие документы предоставляем каждый месяц"
+      })
+      @@include('./src/html/why-we-slide.html', {
+      "img-src": "images/commision.png",
+      "img-alt": "При настройке контекстной рекламы нашей компанией, комиссия 0%",
+      "label": "При настройке контекстной рекламы нашей компанией, комиссия 0%"
+      })
+    </div>
+    <div class="why-we__row row free-audit">
+      <div class="free-audit__wrapper">
+        <div class="free-audit__background"></div>
+        <div class="free-audit__column">
+          <h2 class="free-audit__heading">Бесплатный аудит рекламных кабинетов для наших клиентов!</h2>
+          <p class="free-audit__content">Также занимаемся настройкой и ведением рекламы в сети Интернет!</p>
+        </div>
+        <div class="free-audit__column">
+          <button type="button" name="get-audit" class="free-audit__button _btn">Заказать аудит</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

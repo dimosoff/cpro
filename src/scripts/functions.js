@@ -59,6 +59,32 @@ function setAnchorsEvents() {
   });
 }
 
+export function scrollToTop() {
+  let $scrollTopElement = document.querySelector(".scroll-top");
+  window.addEventListener("scroll", function () {
+    let hasClass = $scrollTopElement.classList.contains("_active"),
+      isScrolled = scrollY > 35;
+    if (isScrolled && !hasClass) {
+      $scrollTopElement.classList.add("_active");
+    } else if (!isScrolled && hasClass) {
+      $scrollTopElement.classList.remove("_active");
+    }
+  });
+  $scrollTopElement.addEventListener("click", () => {
+    let currentScrollTop = window.scrollY;
+    animate({
+      duration: 600,
+      timing: easeOut,
+      draw: function (progress) {
+        window.scrollTo(0, currentScrollTop - currentScrollTop * progress);
+      },
+    });
+  });
+  if (scrollY > 35 && !$scrollTopElement.classList.contains("_active")) {
+    $scrollTopElement.classList.add("_active");
+  }
+}
+
 function animate({ timing, draw, duration }) {
   let start = performance.now();
   requestAnimationFrame(function animate(time) {
@@ -81,7 +107,7 @@ function linear(timeFraction) {
 }
 // eslint-disable-next-line no-unused-vars
 function easeOut(timeFraction) {
-  return Math.sqrt(timeFraction);
+  return Math.pow(timeFraction, 1 / 5);
 }
 
 export function myLazyLoad() {
@@ -157,37 +183,54 @@ function gallery() {
   });
 
   galleryObjects.forEach((elem) => {
+    const imageElement = elem.querySelector("img");
+    if (!imageElement) return;
+
     const imageLink =
-      elem.firstElementChild.getAttribute("data-src") ||
-      elem.firstElementChild.getAttribute("src") ||
+      imageElement.getAttribute("data-src") ||
+      imageElement.getAttribute("src") ||
       "images/placeholder.svg";
     const imageSource = imageLink.replace("/thumbnails", "");
 
     elem.addEventListener("click", (event) => {
-      event.preventDefault();
-      myPopupOverlay.show();
-
-      galleryImage.onload = () => galleryWrapper.appendChild(galleryImage);
-      galleryImage.src = imageSource;
-      galleryImage.alt = event.target.alt;
-      this.show();
+      this.showGalleryElement(event, imageSource);
+    });
+    elem.addEventListener("keydown", (e) => {
+      if (e.key === " " || e.key === "Enter" || e.key === "Spacebar") {
+        this.showGalleryElement(e, imageSource);
+      }
     });
   });
+
+  this.showGalleryElement = (event, imageSource) => {
+    event.preventDefault();
+    myPopupOverlay.show();
+
+    galleryImage.onload = () => galleryWrapper.appendChild(galleryImage);
+    galleryImage.src = imageSource;
+    galleryImage.alt = event.target.alt;
+    this.show();
+  };
 }
 
 function popupOverlay() {
   const name = "popup-overlay";
   this.element = document.querySelector(`.${name}`);
   const elementClassActive = `${name}_active`;
+  const bodyElement = document.body,
+    headerElement = document.querySelector("header");
 
   this.show = () => {
+    let scrollWidth = window.innerWidth - document.body.clientWidth;
     this.element.classList.add(elementClassActive);
-    document.body.style = `overflow: hidden; margin-right: ${
-      window.innerWidth - document.body.clientWidth
-    }px`;
+    bodyElement.style = `overflow: hidden; margin-right: ${scrollWidth}px`;
+    headerElement.style = `padding-right: ${scrollWidth}px`;
   };
   this.hide = () => {
     this.element.classList.remove(elementClassActive);
-    document.body.style = "";
+    setTimeout(() => {
+      bodyElement.style = "";
+      headerElement.style = "";
+    }, 300);
   };
 }

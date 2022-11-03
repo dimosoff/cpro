@@ -1,0 +1,41 @@
+<section class="faq" id="faq">
+  <div class="faq__container container">
+    <div class="faq__row row">
+      <div class="faq__column">
+        <div class="faq__wrapper faq__wrapper_list">
+          <h2 class="faq__heading heading">FAQ</h2>
+          <ul class="faq__list">
+            @@include("./src/html/faq-item.html", {
+            "heading": "Какая минимальная сумма зачислений?",
+            "answer": "Минимальная сумма зачислений"
+            })
+            @@include("./src/html/faq-item.html", {
+            "heading": "Как сэкономить на рекламе, если моя компания работает с НДС?",
+            "answer": "Вы можете с нашей помощью зачислять денежные средства на кабинеты Google и Яндекс и при этом самостоятельно заниматься настройкой рекламы."
+            })
+            @@include("./src/html/faq-item.html", {
+            "heading": "Могу ли я пополнять рекламный кабинет через вас, если я веду рекламу самостоятельно?",
+            "answer": "Вы можете пополнять рекламный кабинет через нас, если ведёте рекламу самостоятельно"
+            })
+            @@include("./src/html/faq-item.html", {
+            "heading": "Какие документы вы предоставляете?",
+            "answer": "Мы предоставляем документы"
+            })
+            @@include("./src/html/faq-item.html", {
+            "heading": "Почему юридическим лицам неудобно делать зачисления через карточку?",
+            "answer": "Юридическим лицам неудобно делать зачисления через карточку"
+            })
+          </ul>
+        </div>
+      </div>
+      <div class="faq__column faq-side-bar">
+        <div class="faq__wrapper faq-side-bar__wrapper">
+          <span class="faq-side-bar__heading">??????</span>
+          <p class="faq-side-bar__content">Не нашли ответ на свой вопрос?</p>
+          <div class="faq-side-bar__background"></div>
+          <button type="button" name="get-answer" class="faq-side-bar__button _btn">Заказать ответ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

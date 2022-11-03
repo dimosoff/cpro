@@ -5,7 +5,9 @@ import gulpHtmlImgWrapper from "gulp-html-img-wrapper";
 export const html = () => {
   return app.gulp
     .src(app.path.src.html)
-    .pipe(fileinclude())
+    .pipe(fileinclude({
+      basepath: "@root"
+    }))
     .pipe(
       app.plugins.if(
         app.isBuild,
