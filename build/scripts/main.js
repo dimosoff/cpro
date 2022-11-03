@@ -207,14 +207,7 @@
     const topUpPopopup = document.querySelector(".top-up-popup");
     const popupCloseButtons = document.querySelectorAll(".popup__close");
     const popupClassActive = "popup_active";
-    const contactsFormName = "contacts";
-    const contactsForm = document.querySelector(
-      `form[name='${contactsFormName}']`
-    );
-    const contactsFormRequiredElements = document.querySelectorAll("[data-required]");
-    const contactsFormPhoneElement = contactsForm.querySelector(
-      `#${contactsFormName}-phone`
-    );
+    const forms = document.querySelectorAll("form.form");
     const formElements = document.querySelectorAll(".form__input");
     const inputMessageClass = "form__error-message";
     const inputMessageClassActive = `${inputMessageClass}_active`;
@@ -284,14 +277,30 @@
     };
     const validateWebsite = (website) => {
       return website.match(
-        /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&=]*)/
+        /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www\.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w\-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[.!/\\\w]*))?)/
       );
     };
-    if (contactsForm) {
-      contactsForm.addEventListener("submit", (e) => {
+    if (forms) {
+      forms.forEach((form) => {
+        submitForm(form);
+      });
+    }
+    if (topUpAccountButton) {
+      topUpAccountButton.addEventListener("click", () => {
+        myPopupOverlay2.show();
+        topUpPopopup.classList.add(popupClassActive);
+      });
+    }
+    function submitForm(form) {
+      const formRequiredElements = form.querySelectorAll("[data-required]"), formName = form.name;
+      const phoneElement = form.querySelector(`#${formName}-phone`);
+      if (phoneElement) {
+        validatePhoneNumber(phoneElement);
+      }
+      form.addEventListener("submit", (e) => {
         e.preventDefault();
         let elemsWithErrors = 0;
-        contactsFormRequiredElements.forEach((currentElement) => {
+        formRequiredElements.forEach((currentElement) => {
           const currentElementSiblings = [
             currentElement.previousElementSibling,
             currentElement.nextElementSibling
@@ -313,12 +322,12 @@
             return;
           }
           switch (currentElement.id) {
-            case `${contactsFormName}-email`:
+            case `${formName}-email`:
               if (!validateEmail(currentElement.value)) {
                 setValidationClasses(emptyParams, "wrong");
                 break;
               }
-            case `${contactsFormName}-website`:
+            case `${formName}-website`:
               if (!validateWebsite(currentElement.value)) {
                 setValidationClasses(emptyParams, "wrong");
                 break;
@@ -335,7 +344,7 @@
           return;
         myPopupOverlay2.show();
         thankYouPopopup.classList.add(popupClassActive);
-        const data = new FormData(contactsForm);
+        const data = new FormData(form);
         let dataArray = [];
         console.info("%c\u0414\u0430\u043D\u043D\u044B\u0435 \u0444\u043E\u0440\u043C\u044B", "color: chartreuse; font-size: 160%");
         for (const [name, value] of data) {
@@ -346,19 +355,10 @@
           );
         }
         console.info("\u041C\u0430\u0441\u0441\u0438\u0432: ", dataArray);
-        contactsFormRequiredElements.forEach((e2) => {
+        formRequiredElements.forEach((e2) => {
           e2.classList.remove(inputClassValid);
         });
-        contactsForm.reset();
-      });
-    }
-    if (contactsFormPhoneElement) {
-      validatePhoneNumber(contactsFormPhoneElement);
-    }
-    if (topUpAccountButton) {
-      topUpAccountButton.addEventListener("click", () => {
-        myPopupOverlay2.show();
-        topUpPopopup.classList.add(popupClassActive);
+        form.reset();
       });
     }
     function changePlaceholderState(elemValue, label, event = "init") {
@@ -415,20 +415,20 @@
         curElLabel.textContent = "";
         return;
       }
-      const isElemHasClass = curElLabel.classList.contains(inputMessageClass);
+      const isElemHasClass = curElLabel.classList.contains(inputMessageClass), elementType = curEl.name.split("-")[1];
       if (isElemHasClass && errorType == "empty") {
         curElLabel.classList.add(inputMessageClassActive);
-        switch (curEl.id) {
-          case `${contactsFormName}-name`:
+        switch (elementType) {
+          case `name`:
             curElLabel.textContent = errorMessages.emptyName;
             break;
-          case `${contactsFormName}-email`:
+          case `email`:
             curElLabel.textContent = errorMessages.emptyEmail;
             break;
-          case `${contactsFormName}-website`:
+          case `website`:
             curElLabel.textContent = errorMessages.emptyWebsite;
             break;
-          case `${contactsFormName}-phone`:
+          case `phone`:
             curElLabel.textContent = errorMessages.emptyPhone;
             break;
         }
@@ -437,13 +437,13 @@
       if (isElemHasClass && errorType == "wrong") {
         curElLabel.classList.add(inputMessageClassActive);
         switch (curEl.id) {
-          case `${contactsFormName}-email`:
+          case `email`:
             curElLabel.textContent = errorMessages.wrongEmail;
             break;
-          case `${contactsFormName}-website`:
+          case `website`:
             curElLabel.textContent = errorMessages.wrongWebsite;
             break;
-          case `${contactsFormName}-phone`:
+          case `phone`:
             curElLabel.textContent = errorMessages.wrongPhone;
             break;
         }
