@@ -19,9 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const inputMessageClass = "form__error-message";
   const inputMessageClassActive = `${inputMessageClass}_active`;
 
-  const inputClass = "form__input";
-  const inputClassError = `${inputClass}_error`;
-  const inputClassValid = `${inputClass}_valid`;
+  const inputClassError = "error";
+  const inputClassValid = "valid";
 
   const errorMessages = {
     emptyName: "Введите имя",
@@ -214,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       elemsWithErrors = document.querySelectorAll(
-        "[data-required].form__input_error"
+        `[data-required]${inputClassError}`
       ).length;
 
       if (elemsWithErrors) return;

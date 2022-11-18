@@ -2182,13 +2182,13 @@ body {
         }
       }
     }
-    &_error%f-item-input {
+    &.error%f-item-input {
       box-shadow: 0 0 10px $required-and-error;
     }
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,
-    &_valid%f-item-input {
+    &.valid%f-item-input {
       background: url("../images/valid-icon.svg") 98% 17px/17px auto no-repeat
         $white;
       background-position: right 15px top 18px;

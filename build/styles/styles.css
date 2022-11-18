@@ -1610,7 +1610,7 @@ body {
   background-position: right 15px top 18px;
 }
 
-.form__input_error.form__input {
+.form__input.error {
   -webkit-box-shadow: 0 0 10px #f35d4e;
           box-shadow: 0 0 10px #f35d4e;
 }
@@ -1618,7 +1618,7 @@ body {
 .form__input:-webkit-autofill,
 .form__input:-webkit-autofill:hover,
 .form__input:-webkit-autofill:focus,
-.form__input_valid.form__input {
+.form__input.valid {
   background: url("../images/valid-icon.svg") 98% 17px/17px auto no-repeat #fff;
   background-position: right 15px top 18px;
 }
