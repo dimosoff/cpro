@@ -1,6 +1,5 @@
 export const myPopupOverlay = new popupOverlay();
 export const myGallery = new gallery();
-export const mySetAnchorsEvents = new setAnchorsEvents();
 
 export function addClassOnClick(itemClick, classToItem, nameOfClass) {
   document.querySelector(itemClick).addEventListener("click", () => {
@@ -23,8 +22,8 @@ export function addClassOnScroll(item, topOffset, nameOfClass) {
   }
 }
 
-function setAnchorsEvents() {
-  let scrollElements = document.querySelectorAll("a[href^='#']");
+export function setAnchorsEvents(menuOpenedClass = "_menu-opened") {
+  const scrollElements = document.querySelectorAll("a[href^='#']");
 
   scrollElements.forEach((elem) => {
     elem.addEventListener("click", (event) => {
@@ -40,10 +39,11 @@ function setAnchorsEvents() {
       if (!linkTarget) return;
 
       const currentScrollTop = window.scrollY,
-        targetScrollTop = linkTarget.offsetTop - 50;
+        headerHeight = document.querySelector('header')?.clientHeight || 50,
+        targetScrollTop = linkTarget.offsetTop - +headerHeight;
 
-      const burgerElem = document.querySelector("._menu-opened");
-      if (burgerElem) burgerElem.classList.remove("_menu-opened");
+      const burgerElem = document.querySelector(menuOpenedClass);
+      if (burgerElem) burgerElem.classList.remove(menuOpenedClass);
 
       animate({
         duration: 600,

@@ -26,8 +26,14 @@
   </li>
   <li class="menu-contacts__link">
     <span class="address">
-      @@include('./src/images/marker-icon.svg', {})<span class="menu-contacts__label">пер. С. Ковалевской, д.54/1,
-        каб.&nbsp;303-60</span>
+      @@include('./src/images/marker-icon.svg', {})<span class="menu-contacts__label">@@address</span>
     </span>
   </li>
+  @@if (address1 !== "") {
+    <li class="menu-contacts__link">
+      <span class="address">
+        @@include('./src/images/marker-icon.svg', {})<span class="menu-contacts__label">@@address1</span>
+      </span>
+    </li>
+  }
 </ul>

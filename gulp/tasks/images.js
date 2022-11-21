@@ -89,8 +89,8 @@ export const images = () => {
             pngquant({
               speed: 4,
               strip: true,
-              quality: [0.5, 0.7],
-              dithering: 0.5,
+              quality: [0.6, 0.8],
+              dithering: 0.8,
               verbose: true,
             }),
           ],

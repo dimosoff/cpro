@@ -676,8 +676,8 @@ body {
       width: 498px;
       height: 92%;
       bottom: 0;
-      background: url("../images/top-up-ad-accounts.png") center bottom/contain
-        no-repeat transparent;
+      background: url("/doc/images/top-up-ad-accounts.png") center
+        bottom/contain no-repeat transparent;
 
       @media ($desktop-min) {
         left: calc(50% + 98px);
@@ -1017,7 +1017,7 @@ body {
       left: 37px;
       width: 67px;
       height: 89px;
-      background: url("../images/free-audit.png") center/contain no-repeat
+      background: url("/doc/images/free-audit.png") center/contain no-repeat
         transparent;
     }
     &::after {
@@ -1027,7 +1027,7 @@ body {
       width: 193px;
       bottom: -20px;
       height: 88px;
-      background: url("../images/wow-background.svg") center/contain no-repeat
+      background: url("/doc/images/wow-background.svg") center/contain no-repeat
         transparent;
     }
   }
@@ -1304,6 +1304,8 @@ body {
     }
   }
   &__wrapper {
+    overflow: hidden;
+    min-height: 100%;
     box-shadow: 0px 7px 38px rgba(0, 0, 0, 0.03);
     border-radius: 10px;
     background-color: $white;
@@ -1339,42 +1341,39 @@ body {
   }
 
   &__wrapper {
-    height: 100%;
     position: relative;
     background-image: $main-gradient;
 
     @media ($tablet-mad) {
-      padding: 33px 21px 210px;
+      padding: 33px 21px 20px;
     }
     @media ($tablet-mid) and ($tablet-min) {
-      padding: 23px 21px 190px;
+      padding: 23px 21px;
     }
     @media ($mobile-max) {
-      padding: 33px 33px 167px;
+      padding: 33px 33px 23px;
     }
   }
   &__background {
-    left: 50%;
+    right: -55px;
     position: absolute;
-    transform: translateX(-50%);
-    background: url("../images/steps-background.png") center/contain no-repeat
-      transparent;
+    background: url("/doc/images/steps-background.png") center bottom/contain
+      no-repeat transparent;
 
     @media ($tablet-mad) {
-      width: 221px;
-      height: 125px;
+      width: 214px;
+      height: 120px;
+      bottom: -45px;
     }
     @media ($tablet-mid) and ($tablet-min) {
       width: 171px;
       height: 95px;
-    }
-    @media ($tablet-min) {
-      bottom: 51px;
+      bottom: -35px;
     }
     @media ($mobile-max) {
-      width: 138px;
-      height: 81px;
-      bottom: 16px;
+      width: 178px;
+      height: 101px;
+      bottom: -25px;
     }
   }
   &__content {
@@ -1386,6 +1385,20 @@ body {
 
     @media ($mobile-max) {
       font-size: 14px;
+    }
+
+    %steps-side-bar-partner + & {
+      margin-top: 26px;
+    }
+  }
+  &__partner {
+    display: inline-block;
+    position: relative;
+    margin-top: 11px;
+    @extend %steps-side-bar-partner;
+
+    & > img {
+      height: auto;
     }
   }
 }
@@ -1477,10 +1490,10 @@ body {
 }
 .experts {
   @media ($desktop-min) {
-    padding: 50px 0;
+    padding: 50px 0 20px;
   }
   @media ($tablet-max) and ($tablet-mad) {
-    padding: 30px 0;
+    padding: 30px 0 15px;
   }
   @media ($tablet-mid) and ($tablet-min) {
     padding: 30px 0 15px;
@@ -1530,9 +1543,11 @@ body {
   &__slide {
     @media ($desktop-min) {
       @include column-size(16.6666%, 15px);
+      margin-bottom: 30px;
     }
     @media ($tablet-max) and ($tablet-mad) {
       @include column-size(16.6666%, 7.5px);
+      margin-bottom: 15px;
     }
     @media ($tablet-mid) and ($tablet-min) {
       @include column-size(33.3333%, 7.5px);
@@ -1560,8 +1575,9 @@ body {
       }
     }
   }
-  // &__image {
-  // }
+  &__image {
+    background-color: #fff;
+  }
 }
 .faq {
   @media ($desktop-min) {
@@ -1828,7 +1844,7 @@ body {
     left: 50%;
     position: absolute;
     transform: translateX(-50%);
-    background: url("../images/your-answer.png") center/contain no-repeat
+    background: url("/doc/images/your-answer.png") center/contain no-repeat
       transparent;
 
     @media ($tablet-mad) {
@@ -1940,7 +1956,7 @@ body {
       content: "";
       position: absolute;
       bottom: 0;
-      background: url("../images/contacts-01-background.png") left
+      background: url("/doc/images/contacts-01-background.png") left
         bottom/contain no-repeat transparent;
 
       @media ($desktop-min-xl) {
@@ -1965,7 +1981,7 @@ body {
     &::after {
       content: "";
       position: absolute;
-      background: url("../images/contacts-02-background.png") left
+      background: url("/doc/images/contacts-02-background.png") left
         bottom/contain no-repeat transparent;
 
       @media ($desktop-min-xl) {
@@ -2166,7 +2182,7 @@ body {
         cursor: pointer;
         display: block;
         @extend %f-item-element;
-        background: url("../images/form-file-icon.svg") 98% 15px/15px auto
+        background: url("/doc/images/form-file-icon.svg") 98% 15px/15px auto
           no-repeat $white;
         background-position: right 15px top 18px;
 
@@ -2184,12 +2200,13 @@ body {
     }
     &.error%f-item-input {
       box-shadow: 0 0 10px $required-and-error;
+      @extend %f-item-input-error;
     }
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,
     &.valid%f-item-input {
-      background: url("../images/valid-icon.svg") 98% 17px/17px auto no-repeat
+      background: url("/doc/images/valid-icon.svg") 98% 17px/17px auto no-repeat
         $white;
       background-position: right 15px top 18px;
     }
@@ -2242,7 +2259,7 @@ body {
   //     &:after {
   //       @extend %f-checkbox-pseudo;
   //       opacity: 0;
-  //       background: url("../images/check.svg") 6px 3px / auto no-repeat
+  //       background: url("/doc/images/check.svg") 6px 3px / auto no-repeat
   //         transparent;
   //       transition: opacity $transition3, background-position $transition3;
   //     }
@@ -2283,7 +2300,7 @@ body {
       padding-bottom: 3px;
     }
 
-    &_active {
+    %f-item-input-error ~ & {
       margin: 5px 0 -5px;
 
       @media ($tablet-max) {
@@ -2384,7 +2401,7 @@ body {
   // &__row {
   // }
   &__column {
-    @media ($desktop-min) {
+    @media ($desktop-min-xl) {
       &:nth-child(1) {
         @include column-size(42%, 15px);
       }
@@ -2397,13 +2414,15 @@ body {
         justify-content: flex-end;
       }
     }
-    @media ($tablet-max) and ($tablet-mad) {
+    @media ($desktop-max) and ($tablet-mad) {
       flex-basis: 0;
       flex-grow: 1;
       max-width: 100%;
 
       &:nth-child(1) {
         flex-grow: 1.5;
+        flex-basis: auto;
+        margin-bottom: 30px;
       }
     }
     @media ($tablet-mid) and ($tablet-min) {
@@ -2640,9 +2659,14 @@ body {
           background-color: $secondary-background;
         }
       }
+
       &:focus-visible {
         box-shadow: 0 0 10px $secondary-color !important;
       }
+    }
+    &__error-message {
+      color: $required-and-error;
+      text-shadow: none;
     }
     & textarea%f-item-input {
       min-height: 95px;

@@ -10,8 +10,8 @@ export const path = {
     fonts: `${buildFolder}/fonts/`,
     files: `${buildFolder}/files/`,
     styles: `${buildFolder}/styles/`,
-    images: `${buildFolder}/images/`,
-    favicon: `${buildFolder}/images/favicon/`,
+    images: `${buildFolder}/doc/images/`,
+    favicon: `${buildFolder}/doc/images/favicon/`,
     scripts: `${buildFolder}/scripts/`,
   },
   src: {
