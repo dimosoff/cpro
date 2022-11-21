@@ -151,9 +151,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     forms.forEach((form) => {
       const phoneElement = form.querySelector(`#${form.name}-phone`);
+      const fileElement = form.querySelector(`#${form.name}-file`);
 
       if (phoneElement) {
         validatePhoneNumber(phoneElement);
+      }
+      if (fileElement) {
+        validateFile(fileElement);
       }
     });
   }
@@ -389,6 +393,20 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       e.target.value = phoneArray;
     });
+  }
+  function validateFile(inputElement) {
+    inputElement.files[0]
+    let fileName = inputElement.files[0]?.name,
+      fileSize = inputElement.files[0]?.size;
+
+    if (fileSize > 5000000) {
+      let inputMessage = inputElement.parentElement.querySelector('.form__error-message'),
+        inputLabel = inputElement.parentElement.querySelector('.form__label');
+        inputMessage.textContent = "Файл больше 5 мегабайт.";
+      return;
+    }
+
+    inputLabel.textContent = `Файл: ${fileName}`;
   }
 });
 
