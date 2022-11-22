@@ -91,46 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // swiper //
-
-  // eslint-disable-next-line no-unused-vars, no-undef
-  /*const swiper = new Swiper(".swiper", {
-    // Optional parameters
-    loop: true,
-    rewind: false,
-    grabCursor: true,
-    slidesPerView: 3,
-    //autoHeight: true,
-    //setWrapperSize: true,
-
-    // If we need pagination
-    //pagination: {
-    //  el: '.swiper-pagination',
-    //},
-
-    // Navigation arrows
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-      },
-      576: {
-        slidesPerView: 2,
-      },
-      768: {
-        slidesPerView: 3,
-      },
-    },
-    on: {
-      update: function () {
-        myFunctions.myLazyLoad();
-      },
-    },
-  });*/
-
   // form validation //
 
   // const validateEmail = (email) => {
@@ -150,14 +110,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // });
 
     forms.forEach((form) => {
-      const phoneElement = form.querySelector(`#${form.name}-phone`);
-      const fileElement = form.querySelector(`#${form.name}-file`);
+      const phoneElement = form.querySelector("[name=phone]");
+      const fileElement = form.querySelector("[name=file]");
 
       if (phoneElement) {
         validatePhoneNumber(phoneElement);
       }
       if (fileElement) {
-        validateFile(fileElement);
+        fileElement.addEventListener("change", (elem) =>
+          validateFile(elem.target)
+        );
       }
     });
   }
@@ -361,52 +323,90 @@ document.addEventListener("DOMContentLoaded", function () {
   // }
 
   function validatePhoneNumber(inputElement) {
-    inputElement.addEventListener("input", (e) => {
-      let y = e.target.value.replace(/((?!\+)\D+)+/g, "");
-      //let x1 = y.match(/^(\+7{0,2})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-      let x1 = y.match(/^(\+\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-      let phoneArray = "",
-        mre = 1; /*matched RegEx*/
+    const phoneFormat = (value) =>
+      value
+        .replace(/((?!\+)\D+)+/g, "")
+        .match(/^(\+375)(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
 
-      if (x1 === null || !x1[mre]) {
+    inputElement.addEventListener("click", (e) => {
+      if (e.target.value === "" || !phoneFormat(e.target.value))
+        e.target.value = "+375";
+    });
+    inputElement.addEventListener("input", (e) => {
+      const elem = e.target;
+      let cursorPosition = elem.selectionStart;
+      elem.value = elem.value.slice(0, cursorPosition) + elem.value.slice(cursorPosition + 1);
+      elem.selectionEnd = cursorPosition;
+
+      let x = phoneFormat(elem.value);
+      let phoneArray = "";
+
+      if (x === null || !x[1]) {
         phoneArray = "";
-      } else if (x1[mre] && !x1[mre + 1]) {
-        phoneArray = `${x1[mre]}`;
-      } else if (x1[mre] && x1[mre + 1] && !x1[mre + 2]) {
-        phoneArray = `${x1[mre]} (${x1[mre + 1]}`;
-      } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && !x1[mre + 3]) {
-        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}`;
-      } else if (
-        x1[mre] &&
-        x1[mre + 1] &&
-        x1[mre + 2] &&
-        x1[mre + 3] &&
-        !x1[mre + 4]
-      ) {
-        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${
-          x1[mre + 3]
-        }`;
+      } else if (x[1] && !x[2]) {
+        phoneArray = `${x[1]}`;
+      } else if (x[1] && x[2] && !x[3]) {
+        phoneArray = `${x[1]} (${x[2]}`;
+      } else if (x[1] && x[2] && x[3] && !x[4]) {
+        phoneArray = `${x[1]} (${x[2]}) ${x[3]}`;
+      } else if (x[1] && x[2] && x[3] && x[4] && !x[5]) {
+        phoneArray = `${x[1]} (${x[2]}) ${x[3]}-${x[4]}`;
       } else {
-        phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${
-          x1[mre + 3]
-        }-${x1[mre + 4]}`;
+        phoneArray = `${x[1]} (${x[2]}) ${x[3]}-${x[4]}-${x[5]}`;
       }
-      e.target.value = phoneArray;
+      elem.value = phoneArray;
     });
   }
-  function validateFile(inputElement) {
-    inputElement.files[0]
-    let fileName = inputElement.files[0]?.name,
-      fileSize = inputElement.files[0]?.size;
 
-    if (fileSize > 5000000) {
-      let inputMessage = inputElement.parentElement.querySelector('.form__error-message'),
-        inputLabel = inputElement.parentElement.querySelector('.form__label');
-        inputMessage.textContent = "Файл больше 5 мегабайт.";
+  function validateFile(inputElement) {
+    const fileErrorClass = "file_error";
+    if (!inputElement.files.length) {
+      inputElement.classList.add(fileErrorClass);
+      inputMessage.textContent = "Файл не выбран.";
       return;
     }
 
-    inputLabel.textContent = `Файл: ${fileName}`;
+    // init state //
+    const inputHeading = inputElement.parentElement.querySelector(
+        ".form__item-heading"
+      ),
+      inputMessage = inputElement.parentElement.querySelector(
+        ".form__error-message"
+      ),
+      maxFileSize = inputElement.dataset?.maxSize * Math.pow(1024, 2) || 5e6,
+      firstFile = inputElement.files[0],
+      fileName = firstFile.name,
+      fileSize = firstFile.size;
+
+    // clear validation //
+    inputElement.classList.remove(fileErrorClass);
+    inputMessage.textContent = "";
+
+    const fileNameToShow =
+        fileName.length > 25
+          ? `${fileName.slice(0, 10)}...${fileName.slice(-10)}`
+          : fileName,
+      fileSizeToShow = formatBytes(fileSize);
+
+    inputHeading.textContent = `Файл: ${fileNameToShow} (${fileSizeToShow})`;
+
+    if (fileSize > maxFileSize) {
+      inputElement.classList.add(fileErrorClass);
+      inputMessage.textContent = `Файл больше ${formatBytes(maxFileSize)}`;
+      return;
+    }
+  }
+
+  function formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return "0 Байт";
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["Байт", "КБ", "МБ", "ГБ", "ТБ", "ПБ", "ЭБ", "ЗБ", "ЙБ"];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
   }
 });
 

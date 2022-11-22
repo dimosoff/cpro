@@ -259,13 +259,16 @@
     }
     if (forms) {
       forms.forEach((form) => {
-        const phoneElement = form.querySelector(`#${form.name}-phone`);
-        const fileElement = form.querySelector(`#${form.name}-file`);
+        const phoneElement = form.querySelector("[name=phone]");
+        const fileElement = form.querySelector("[name=file]");
         if (phoneElement) {
           validatePhoneNumber(phoneElement);
         }
         if (fileElement) {
-          validateFile(fileElement);
+          fileElement.addEventListener(
+            "change",
+            (elem) => validateFile(elem.target)
+          );
         }
       });
     }
@@ -311,36 +314,65 @@
       }
     }
     function validatePhoneNumber(inputElement) {
+      const phoneFormat = (value) => value.replace(/((?!\+)\D+)+/g, "").match(/^(\+375)(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+      inputElement.addEventListener("click", (e) => {
+        if (e.target.value === "" || !phoneFormat(e.target.value))
+          e.target.value = "+375";
+      });
       inputElement.addEventListener("input", (e) => {
-        let y = e.target.value.replace(/((?!\+)\D+)+/g, "");
-        let x1 = y.match(/^(\+\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-        let phoneArray = "", mre = 1;
-        if (x1 === null || !x1[mre]) {
+        const elem = e.target;
+        let cursorPosition = elem.selectionStart;
+        elem.value = elem.value.slice(0, cursorPosition) + elem.value.slice(cursorPosition + 1);
+        elem.selectionEnd = cursorPosition;
+        let x = phoneFormat(elem.value);
+        let phoneArray = "";
+        if (x === null || !x[1]) {
           phoneArray = "";
-        } else if (x1[mre] && !x1[mre + 1]) {
-          phoneArray = `${x1[mre]}`;
-        } else if (x1[mre] && x1[mre + 1] && !x1[mre + 2]) {
-          phoneArray = `${x1[mre]} (${x1[mre + 1]}`;
-        } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && !x1[mre + 3]) {
-          phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}`;
-        } else if (x1[mre] && x1[mre + 1] && x1[mre + 2] && x1[mre + 3] && !x1[mre + 4]) {
-          phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${x1[mre + 3]}`;
+        } else if (x[1] && !x[2]) {
+          phoneArray = `${x[1]}`;
+        } else if (x[1] && x[2] && !x[3]) {
+          phoneArray = `${x[1]} (${x[2]}`;
+        } else if (x[1] && x[2] && x[3] && !x[4]) {
+          phoneArray = `${x[1]} (${x[2]}) ${x[3]}`;
+        } else if (x[1] && x[2] && x[3] && x[4] && !x[5]) {
+          phoneArray = `${x[1]} (${x[2]}) ${x[3]}-${x[4]}`;
         } else {
-          phoneArray = `${x1[mre]} (${x1[mre + 1]}) ${x1[mre + 2]}-${x1[mre + 3]}-${x1[mre + 4]}`;
+          phoneArray = `${x[1]} (${x[2]}) ${x[3]}-${x[4]}-${x[5]}`;
         }
-        e.target.value = phoneArray;
+        elem.value = phoneArray;
       });
     }
     function validateFile(inputElement) {
-      var _a, _b;
-      inputElement.files[0];
-      let fileName = (_a = inputElement.files[0]) == null ? void 0 : _a.name, fileSize = (_b = inputElement.files[0]) == null ? void 0 : _b.size;
-      if (fileSize > 5e6) {
-        let inputMessage = inputElement.parentElement.querySelector(".form__error-message"), inputLabel2 = inputElement.parentElement.querySelector(".form__label");
-        inputMessage.textContent = "\u0424\u0430\u0439\u043B \u0431\u043E\u043B\u044C\u0448\u0435 5 \u043C\u0435\u0433\u0430\u0431\u0430\u0439\u0442.";
+      var _a;
+      const fileErrorClass = "file_error";
+      if (!inputElement.files.length) {
+        inputElement.classList.add(fileErrorClass);
+        inputMessage.textContent = "\u0424\u0430\u0439\u043B \u043D\u0435 \u0432\u044B\u0431\u0440\u0430\u043D.";
         return;
       }
-      inputLabel.textContent = `\u0424\u0430\u0439\u043B: ${fileName}`;
+      const inputHeading = inputElement.parentElement.querySelector(
+        ".form__item-heading"
+      ), inputMessage = inputElement.parentElement.querySelector(
+        ".form__error-message"
+      ), maxFileSize = ((_a = inputElement.dataset) == null ? void 0 : _a.maxSize) * Math.pow(1024, 2) || 5e6, firstFile = inputElement.files[0], fileName = firstFile.name, fileSize = firstFile.size;
+      inputElement.classList.remove(fileErrorClass);
+      inputMessage.textContent = "";
+      const fileNameToShow = fileName.length > 25 ? `${fileName.slice(0, 10)}...${fileName.slice(-10)}` : fileName, fileSizeToShow = formatBytes(fileSize);
+      inputHeading.textContent = `\u0424\u0430\u0439\u043B: ${fileNameToShow} (${fileSizeToShow})`;
+      if (fileSize > maxFileSize) {
+        inputElement.classList.add(fileErrorClass);
+        inputMessage.textContent = `\u0424\u0430\u0439\u043B \u0431\u043E\u043B\u044C\u0448\u0435 ${formatBytes(maxFileSize)}`;
+        return;
+      }
+    }
+    function formatBytes(bytes, decimals = 2) {
+      if (!+bytes)
+        return "0 \u0411\u0430\u0439\u0442";
+      const k = 1024;
+      const dm = decimals < 0 ? 0 : decimals;
+      const sizes = ["\u0411\u0430\u0439\u0442", "\u041A\u0411", "\u041C\u0411", "\u0413\u0411", "\u0422\u0411", "\u041F\u0411", "\u042D\u0411", "\u0417\u0411", "\u0419\u0411"];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
     }
   });
 })();

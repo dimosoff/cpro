@@ -2438,6 +2438,12 @@ body {
   max-height: 100%;
 }
 
+.form__input[type=file] ~ .form__item-heading, .form__input {
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
 .form {
   color: #fff;
 }
@@ -2460,23 +2466,15 @@ body {
     margin-bottom: 7px;
   }
 }
-.form__item .form__input[type=file] ~ label, .form__item .form__input {
-  border: none;
-  border-radius: 5px;
-  background-color: #fff;
-}
 .form__item:last-child {
   margin-bottom: 0;
 }
 .form__item_more-gap {
   margin-bottom: 27px;
 }
-.form__label {
+.form__item-heading {
   font-size: 14px;
   line-height: 1.375;
-}
-.form__label[aria-hidden=true] {
-  display: none;
 }
 .form__label_placeholder {
   position: absolute;
@@ -2515,7 +2513,7 @@ body {
     font-size: 14px;
   }
 }
-.form__input[type=file] ~ label {
+.form__input[type=file] ~ .form__item-heading {
   width: 100%;
   color: #6f6f6f;
   cursor: pointer;
@@ -2524,20 +2522,23 @@ body {
   background-position: right 15px top 18px;
 }
 @media (max-width: 991.98px) {
-  .form__input[type=file] ~ label {
+  .form__input[type=file] ~ .form__item-heading {
     font-size: 15px;
   }
 }
 @media (min-width: 576px) {
-  .form__input[type=file] ~ label {
+  .form__input[type=file] ~ .form__item-heading {
     padding: 15px 15px 15px 25px;
   }
 }
 @media (max-width: 575.98px) {
-  .form__input[type=file] ~ label {
+  .form__input[type=file] ~ .form__item-heading {
     padding: 13px 29px;
     font-size: 14px;
   }
+}
+.form__input[type=file].file_error ~ .form__item-heading {
+  box-shadow: 0 0 10px #f35d4e;
 }
 .form__input.error {
   box-shadow: 0 0 10px #f35d4e;
@@ -2580,6 +2581,7 @@ body {
   }
 }
 .form__error-message {
+  display: block;
   font-size: 14px;
   font-weight: 500;
   color: #fff;
@@ -2592,11 +2594,11 @@ body {
     padding-bottom: 3px;
   }
 }
-.form__input.error ~ .form__error-message {
+.form__input[type=file].file_error ~ .form__item-heading ~ .form__error-message, .form__input.error ~ .form__error-message {
   margin: 5px 0 -5px;
 }
 @media (max-width: 991.98px) {
-  .form__input.error ~ .form__error-message {
+  .form__input[type=file].file_error ~ .form__item-heading ~ .form__error-message, .form__input.error ~ .form__error-message {
     margin-bottom: 0;
   }
 }
@@ -2958,7 +2960,7 @@ body {
   font-size: 14px;
   background-color: #f1f3f9;
 }
-.top-up-popup .form__input[type=file] ~ label {
+.top-up-popup .form__input[type=file] ~ .form__item-heading {
   text-align: left;
   background-color: #f1f3f9;
 }
