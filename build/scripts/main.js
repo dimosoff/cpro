@@ -203,16 +203,13 @@
     scrollToTop();
     setAnchorsEvents(menuOpenedClass);
     myGallery;
-    const myPopupOverlay2 = myPopupOverlay;
-    const thankYouPopopup = document.querySelector(".thank-you-popup");
-    const topUpPopopup = document.querySelector(".top-up-popup");
+    const popupOverlay2 = myPopupOverlay;
+    const allPopopups = document.querySelectorAll(".popup");
     const popupCloseButtons = document.querySelectorAll(".popup__close");
     const popupClassActive = "popup_active";
     const forms = document.querySelectorAll("form.form");
     const formElements = document.querySelectorAll(".form__input");
-    const topUpAccountButton = document.querySelector(
-      "button[name=top-up-account]"
-    );
+    const openPopupButtons = document.querySelectorAll("[data-open-popup]");
     const allFaqItems = document.querySelectorAll(".faq-item");
     if (allFaqItems.length) {
       allFaqItems.forEach((item) => {
@@ -231,15 +228,13 @@
     }
     popupCloseButtons.forEach((elem) => {
       elem.addEventListener("click", () => {
-        myPopupOverlay2.hide();
-        thankYouPopopup.classList.remove(popupClassActive);
-        topUpPopopup.classList.remove(popupClassActive);
+        popupOverlay2.hide();
+        allPopopups.forEach((elem2) => elem2.classList.remove(popupClassActive));
       });
     });
-    myPopupOverlay2.element.addEventListener("click", () => {
-      myPopupOverlay2.hide();
-      thankYouPopopup.classList.remove(popupClassActive);
-      topUpPopopup.classList.remove(popupClassActive);
+    popupOverlay2.element.addEventListener("click", () => {
+      popupOverlay2.hide();
+      allPopopups.forEach((elem) => elem.classList.remove(popupClassActive));
     });
     if (formElements) {
       formElements.forEach((elem) => {
@@ -272,10 +267,24 @@
         }
       });
     }
-    if (topUpAccountButton) {
-      topUpAccountButton.addEventListener("click", () => {
-        myPopupOverlay2.show();
-        topUpPopopup.classList.add(popupClassActive);
+    if (openPopupButtons.length) {
+      openPopupButtons.forEach((elem) => {
+        elem.addEventListener("click", (event) => {
+          const currentButton = event.currentTarget;
+          if (!currentButton)
+            return;
+          const currentPopup = document.getElementById(
+            currentButton.dataset.openPopup
+          );
+          if (!currentPopup) {
+            console.log(
+              `There is no pop-up with this ID ("${currentButton.dataset.openPopup}") or ID is wrong.`
+            );
+            return;
+          }
+          popupOverlay2.show();
+          currentPopup.classList.add(popupClassActive);
+        });
       });
     }
     function changePlaceholderState(elemValue, label, event = "init") {

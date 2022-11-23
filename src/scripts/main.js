@@ -6,10 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   myFunctions.scrollToTop();
   myFunctions.setAnchorsEvents(menuOpenedClass);
   myFunctions.myGallery;
-  const myPopupOverlay = myFunctions.myPopupOverlay;
+  const popupOverlay = myFunctions.myPopupOverlay;
 
-  const thankYouPopopup = document.querySelector(".thank-you-popup");
-  const topUpPopopup = document.querySelector(".top-up-popup");
+  const allPopopups = document.querySelectorAll(".popup");
   const popupCloseButtons = document.querySelectorAll(".popup__close");
 
   const popupClassActive = "popup_active";
@@ -33,9 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //   wrongEmail: "Неверный email",
   // };
 
-  const topUpAccountButton = document.querySelector(
-    "button[name=top-up-account]"
-  );
+  const openPopupButtons = document.querySelectorAll("[data-open-popup]");
 
   //faq list collapse
   const allFaqItems = document.querySelectorAll(".faq-item");
@@ -61,16 +58,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   popupCloseButtons.forEach((elem) => {
     elem.addEventListener("click", () => {
-      myPopupOverlay.hide();
-      thankYouPopopup.classList.remove(popupClassActive);
-      topUpPopopup.classList.remove(popupClassActive);
+      popupOverlay.hide();
+      allPopopups.forEach((elem) => elem.classList.remove(popupClassActive));
     });
   });
 
-  myPopupOverlay.element.addEventListener("click", () => {
-    myPopupOverlay.hide();
-    thankYouPopopup.classList.remove(popupClassActive);
-    topUpPopopup.classList.remove(popupClassActive);
+  popupOverlay.element.addEventListener("click", () => {
+    popupOverlay.hide();
+    allPopopups.forEach((elem) => elem.classList.remove(popupClassActive));
   });
 
   // "contacts" form placeholder state movement //
@@ -124,10 +119,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  if (topUpAccountButton) {
-    topUpAccountButton.addEventListener("click", () => {
-      myPopupOverlay.show();
-      topUpPopopup.classList.add(popupClassActive);
+  if (openPopupButtons.length) {
+    openPopupButtons.forEach((elem) => {
+      elem.addEventListener("click", (event) => {
+        const currentButton = event.currentTarget;
+        if (!currentButton) return;
+        const currentPopup = document.getElementById(
+          currentButton.dataset.openPopup
+        );
+        if (!currentPopup) {
+          console.log(
+            `There is no pop-up with this ID ("${currentButton.dataset.openPopup}") or ID is wrong.`
+          );
+          return;
+        }
+        popupOverlay.show();
+        currentPopup.classList.add(popupClassActive);
+      });
     });
   }
 
@@ -335,7 +343,9 @@ document.addEventListener("DOMContentLoaded", function () {
     inputElement.addEventListener("input", (e) => {
       const elem = e.target;
       let cursorPosition = elem.selectionStart;
-      elem.value = elem.value.slice(0, cursorPosition) + elem.value.slice(cursorPosition + 1);
+      elem.value =
+        elem.value.slice(0, cursorPosition) +
+        elem.value.slice(cursorPosition + 1);
       elem.selectionEnd = cursorPosition;
 
       let x = phoneFormat(elem.value);
